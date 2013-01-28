@@ -1,55 +1,47 @@
-# EESchema Netlist Version 1.1 created  Sun 23 Sep 2012 09:22:08 PM CEST
+# EESchema Netlist Version 1.1 created  Tue 18 Dec 2012 07:33:49 AM CET
 (
  ( /50532C78 $noname  CON1 2PIN_SCREWTERMINAL {Lib=2PIN_SCREWTERMINAL}
-  (    1 VAA )
-  (    2 -VAA )
+  (    1 -VAA )
+  (    2 VAA )
  )
  ( /4FE60A1C $noname  C8 33p {Lib=C}
-  (    1 Rail_signal )
+  (    1 N-000036 )
   (    2 GND )
  )
  ( /4FE609F8 $noname  R4 10k {Lib=R}
   (    1 VAA )
-  (    2 Rail_signal )
- )
- ( /4FE60998 $noname  D3 DIODE {Lib=DIODE}
-  (    1 GND )
-  (    2 Rail_signal )
- )
- ( /4FE60989 $noname  D4 DIODE {Lib=DIODE}
-  (    1 Rail_signal )
-  (    2 +5V )
+  (    2 N-000036 )
  )
  ( /4FE6092B $noname  D2 LED {Lib=LED}
-  (    1 N-000032 )
+  (    1 N-000031 )
   (    2 GND )
  )
  ( /4FE60924 $noname  R11 1k {Lib=R}
-  (    1 N-000038 )
-  (    2 N-000032 )
+  (    1 N-000023 )
+  (    2 N-000031 )
  )
  ( /4F71C3C9 $noname  R1 10k {Lib=R}
   (    1 +5V )
-  (    2 N-000028 )
+  (    2 N-000030 )
  )
  ( /4F71C229 $noname  X1 10MHz {Lib=CRYSTAL}
-  (    1 N-000034 )
-  (    2 N-000036 )
+  (    1 N-000035 )
+  (    2 N-000029 )
  )
  ( /4F71BF8F $noname  C4 220u {Lib=CP}
-  (    1 N-000035 )
+  (    1 N-000033 )
   (    2 GND )
  )
  ( /4F71B43C $noname  C1 100n {Lib=C}
-  (    1 N-000028 )
+  (    1 N-000030 )
   (    2 GND )
  )
  ( /4F71B438 $noname  C2 33p {Lib=C}
-  (    1 N-000036 )
+  (    1 N-000029 )
   (    2 GND )
  )
  ( /4F71B435 $noname  C3 33p {Lib=C}
-  (    1 N-000034 )
+  (    1 N-000035 )
   (    2 GND )
  )
  ( /4F71B422 $noname  C5 100n {Lib=C}
@@ -57,39 +49,17 @@
   (    2 +5V )
  )
  ( /4F71B41D $noname  C6 100n {Lib=C}
-  (    1 N-000035 )
+  (    1 N-000033 )
   (    2 GND )
  )
  ( /4F71B415 $noname  C7 100n {Lib=C}
   (    1 +5V )
   (    2 GND )
  )
- ( /4F71B15A DIP20  IC1 ATTINY2313-P {Lib=ATTINY2313-P}
-  (    1 N-000028 )
-  (    2 GND_FET )
-  (    3 SWITCH4 )
-  (    4 N-000036 )
-  (    5 N-000034 )
-  (    6 Rail_signal )
-  (    7 SWITCH1 )
-  (    8 SWITCH2 )
-  (    9 SWITCH3 )
-  (   10 GND )
-  (   11 N-000038 )
-  (   12 PB0 )
-  (   13 PB1 )
-  (   14 PB2 )
-  (   15 PB3 )
-  (   16 PB4 )
-  (   17 PB5 )
-  (   18 PB6 )
-  (   19 PB7 )
-  (   20 +5V )
- )
  ( /50577791 $noname  D1 DF01S {Lib=DF01S}
   (    1 GND )
   (    2 -VAA )
-  (    3 N-000035 )
+  (    3 N-000033 )
   (    4 VAA )
  )
  ( /50594DD1 SO8E  U1 UA78L05 {Lib=UA78L05}
@@ -98,7 +68,7 @@
   (    3 GND )
   (    6 GND )
   (    7 GND )
-  (    8 N-000035 )
+  (    8 N-000033 )
  )
  ( /505C6F98 $noname  R2 1k {Lib=R}
   (    1 GND_FET )
@@ -129,10 +99,6 @@
   (    1 SWITCH4 )
   (    3 GND )
  )
- ( /505CA230 $noname  CON2 2PIN_SCREWTERMINAL {Lib=2PIN_SCREWTERMINAL}
-  (    1 VCC )
-  (    2 GND )
- )
  ( /505E169A $noname  U3 ULN2803 {Lib=ULN2803}
   (    1 PB0 )
   (    2 PB1 )
@@ -144,42 +110,42 @@
   (    8 PB7 )
   (    9 GND )
   (   10 VCC )
-  (   11 N-000025 )
-  (   12 N-000024 )
-  (   13 N-000012 )
-  (   14 N-000013 )
-  (   15 N-000014 )
-  (   16 N-000015 )
-  (   17 N-000011 )
-  (   18 N-000010 )
+  (   11 N-000006 )
+  (   12 N-000007 )
+  (   13 N-000008 )
+  (   14 N-000021 )
+  (   15 N-000020 )
+  (   16 N-000019 )
+  (   17 N-000018 )
+  (   18 N-000017 )
  )
  ( /505ED2C4 $noname  K1 CONN_3 {Lib=CONN_3}
-  (    1 N-000010 )
+  (    1 N-000017 )
   (    2 VCC )
-  (    3 N-000011 )
+  (    3 N-000018 )
  )
  ( /505ED2D3 $noname  K2 CONN_3 {Lib=CONN_3}
-  (    1 N-000015 )
+  (    1 N-000019 )
   (    2 VCC )
-  (    3 N-000014 )
+  (    3 N-000020 )
  )
  ( /505ED2E2 $noname  K3 CONN_3 {Lib=CONN_3}
-  (    1 N-000013 )
+  (    1 N-000021 )
   (    2 VCC )
-  (    3 N-000012 )
+  (    3 N-000008 )
  )
  ( /505ED2F1 $noname  K4 CONN_3 {Lib=CONN_3}
-  (    1 N-000024 )
+  (    1 N-000007 )
   (    2 VCC )
-  (    3 N-000025 )
+  (    3 N-000006 )
  )
  ( /505F02A3 $noname  R5 1k {Lib=R}
   (    1 PB3 )
-  (    2 N-000026 )
+  (    2 N-000004 )
  )
  ( /505F02B2 $noname  R6 1k {Lib=R}
   (    1 PB4 )
-  (    2 N-000030 )
+  (    2 N-000002 )
  )
  ( /505F21D4 $noname  R7 0 {Lib=R}
   (    1 PB1 )
@@ -198,12 +164,12 @@
   (    2 GND )
  )
  ( /505F2ABD $noname  K5 CONN_3 {Lib=CONN_3}
-  (    1 N-000026 )
+  (    1 N-000004 )
   (    2 VCC )
   (    3 AGND )
  )
  ( /505F2ACC $noname  K6 CONN_3 {Lib=CONN_3}
-  (    1 N-000030 )
+  (    1 N-000002 )
   (    2 VCC )
   (    3 AGND )
  )
@@ -212,8 +178,47 @@
   (    2 +5V )
   (    3 PB7 )
   (    4 PB5 )
-  (    5 N-000028 )
+  (    5 N-000030 )
   (    6 GND )
+ )
+ ( /4F71B15A DIP20  IC1 ATTINY2313-P {Lib=ATTINY2313-P}
+  (    1 N-000030 )
+  (    2 GND_FET )
+  (    3 SWITCH4 )
+  (    4 N-000029 )
+  (    5 N-000035 )
+  (    6 Rail_signal )
+  (    7 SWITCH1 )
+  (    8 SWITCH2 )
+  (    9 SWITCH3 )
+  (   10 GND )
+  (   11 N-000023 )
+  (   12 PB0 )
+  (   13 PB1 )
+  (   14 PB2 )
+  (   15 PB3 )
+  (   16 PB4 )
+  (   17 PB5 )
+  (   18 PB6 )
+  (   19 PB7 )
+  (   20 +5V )
+ )
+ ( /50A08FF4 SOT23  Q1 BC847 {Lib=BC547}
+  (    1 +5V )
+  (    2 N-000036 )
+  (    3 Rail_signal )
+ )
+ ( /50A0901F $noname  R12 4k7 {Lib=R}
+  (    1 Rail_signal )
+  (    2 GND )
+ )
+ ( /50CF3AAB $noname  CON2 2PIN_SCREWTERMINAL {Lib=2PIN_SCREWTERMINAL}
+  (    1 VCC )
+  (    2 GND )
+ )
+ ( /50CF407C $noname  U4 JUMPER {Lib=JUMPER}
+  (    1 N-000033 )
+  (    2 VCC )
  )
 )
 *
@@ -229,14 +234,6 @@ $component R4
  SM0805
  R?-*
  SM1206
-$endlist
-$component D3
- D?
- S*
-$endlist
-$component D4
- D?
- S*
 $endlist
 $component D2
  LED-3MM
@@ -362,165 +359,191 @@ $component R10
  R?-*
  SM1206
 $endlist
+$component Q1
+ TO92*
+$endlist
+$component R12
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
 $endfootprintlist
 }
 { Pin List by Nets
-Net 1 "GND" "GND"
- D3 1
- C8 2
- C6 2
+Net 1 "VCC" "VCC"
+ K1 2
+ K4 2
+ CON2 1
+ U4 2
+ K6 2
+ K5 2
+ K2 2
+ U3 10
+ K3 2
+Net 2 "" ""
+ K6 1
+ R6 2
+Net 3 "PB4" "PB4"
+ IC1 16
+ R6 1
+ U3 5
+Net 4 "" ""
+ K5 1
+ R5 2
+Net 5 "PB3" "PB3"
+ R5 1
+ U3 4
+ IC1 15
+Net 6 "" ""
+ U3 11
+ K4 3
+Net 7 "" ""
+ U3 12
+ K4 1
+Net 8 "" ""
+ K3 3
+ U3 13
+Net 9 "PB1" "PB1"
+ IC1 13
+ R7 1
+ U3 2
+Net 10 "SWITCH1" "SWITCH1"
+ IC1 7
+ B1 1
+Net 11 "GND" "GND"
+ D1 1
  U3 9
+ U1 7
+ U2 S
+ R3 2
+ C7 2
+ C6 2
  C5 1
  C3 2
  C2 2
  C1 2
+ U1 2
  C4 2
- CON2 2
  P1 6
- R7 2
+ U1 3
+ D2 2
  R8 2
+ U1 6
  R9 2
  R10 2
- D2 2
- U2 S
- R3 2
+ R12 2
+ R7 2
+ CON2 2
+ B4 3
+ C8 2
+ B1 3
  IC1 10
- C7 2
- U1 7
- U1 6
- U1 3
- U1 2
- D1 1
-Net 2 "PB0" "PB0"
+ B3 3
+Net 12 "PB0" "PB0"
  U3 1
- R8 1
  IC1 12
-Net 3 "PB1" "PB1"
- U3 2
- R7 1
- IC1 13
-Net 4 "PB2" "PB2"
- U3 3
- IC1 14
-Net 5 "PB3" "PB3"
- U3 4
- IC1 15
- R5 1
-Net 6 "PB4" "PB4"
- IC1 16
- R6 1
- U3 5
-Net 7 "PB5" "PB5"
- P1 4
- IC1 17
- U3 6
-Net 8 "PB6" "PB6"
- IC1 18
+ R8 1
+Net 13 "PB6" "PB6"
  U3 7
+ IC1 18
  R10 1
  P1 1
-Net 9 "PB7" "PB7"
- IC1 19
+Net 14 "PB7" "PB7"
  P1 3
  U3 8
+ IC1 19
  R9 1
-Net 10 "" ""
+Net 15 "PB2" "PB2"
+ IC1 14
+ U3 3
+Net 16 "PB5" "PB5"
+ P1 4
+ U3 6
+ IC1 17
+Net 17 "" ""
  U3 18
  K1 1
-Net 11 "" ""
- U3 17
+Net 18 "" ""
  K1 3
-Net 12 "" ""
- K3 3
- U3 13
-Net 13 "" ""
- U3 14
- K3 1
-Net 14 "" ""
- U3 15
- K2 3
-Net 15 "" ""
+ U3 17
+Net 19 "" ""
  U3 16
  K2 1
-Net 24 "" ""
- K4 1
- U3 12
-Net 25 "" ""
- K4 3
- U3 11
-Net 26 "" ""
- R5 2
- K5 1
-Net 27 "AGND" "AGND"
- U2 D
- K5 3
- K6 3
-Net 28 "" ""
- IC1 1
- P1 5
- R1 2
- C1 1
-Net 29 "+5V" "+5V"
- C7 1
- U1 1
- R1 1
- C5 2
- P1 2
- D4 2
- IC1 20
-Net 30 "" ""
- R6 2
- K6 1
-Net 31 "VCC" "VCC"
- K4 2
- K3 2
- K6 2
- K5 2
- K1 2
- CON2 1
- U3 10
- K2 2
-Net 32 "" ""
- R11 2
- D2 1
-Net 33 "Rail signal" "Rail signal"
- R4 2
+Net 20 "" ""
+ U3 15
+ K2 3
+Net 21 "" ""
+ K3 1
+ U3 14
+Net 22 "Rail signal" "Rail signal"
+ Q1 3
  IC1 6
- C8 1
- D4 1
- D3 2
-Net 34 "" ""
- IC1 5
- X1 1
- C3 1
-Net 35 "" ""
- D1 3
- C6 1
- U1 8
- C4 1
-Net 36 "" ""
- C2 1
+ R12 1
+Net 23 "" ""
+ R11 1
+ IC1 11
+Net 24 "SWITCH2" "SWITCH2"
+ B2 1
+ IC1 8
+Net 25 "SWITCH4" "SWITCH4"
+ B4 1
+ IC1 3
+Net 26 "SWITCH3" "SWITCH3"
+ B3 1
+ IC1 9
+Net 27 "AGND" "AGND"
+ K6 3
+ K5 3
+ U2 D
+Net 28 "+5V" "+5V"
+ U1 1
+ C5 2
+ C7 1
+ R1 1
+ Q1 1
+ IC1 20
+ P1 2
+Net 29 "" ""
  IC1 4
  X1 2
-Net 37 "VAA" "VAA"
+ C2 1
+Net 30 "" ""
+ R1 2
+ IC1 1
+ C1 1
+ P1 5
+Net 31 "" ""
+ D2 1
+ R11 2
+Net 32 "-VAA" "-VAA"
+ D1 2
  CON1 1
- D1 4
+Net 33 "" ""
+ U1 8
+ C4 1
+ U4 1
+ D1 3
+ C6 1
+Net 34 "VAA" "VAA"
+ CON1 2
  R4 1
-Net 38 "" ""
- IC1 11
- R11 1
-Net 39 "" ""
- U2 G
- R2 2
- R3 1
-Net 40 "SWITCH1" "SWITCH1"
- B1 1
- IC1 7
-Net 41 "GND FET" "GND FET"
+ D1 4
+Net 35 "" ""
+ C3 1
+ X1 1
+ IC1 5
+Net 36 "" ""
+ C8 1
+ R4 2
+ Q1 2
+Net 38 "GND FET" "GND FET"
  IC1 2
  R2 1
-Net 44 "-VAA" "-VAA"
- CON1 2
- D1 2
+Net 39 "" ""
+ R2 2
+ R3 1
+ U2 G
 }
 #End

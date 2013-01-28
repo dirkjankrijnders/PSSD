@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sun 23 Sep 2012 09:22:21 PM CEST
+Cmp-Mod V01 Created by CvPcb (2012-nov-02)-testing date = Tue 18 Dec 2012 07:17:53 AM CET
 
 BeginCmp
 TimeStamp = /505C9C1F;
@@ -92,10 +92,10 @@ IdModule  = 2PIN_Screw_Block;
 EndCmp
 
 BeginCmp
-TimeStamp = /505CA230;
+TimeStamp = /50CF3AAB;
 Reference = CON2;
 ValeurCmp = 2PIN_SCREWTERMINAL;
-IdModule  = 2PIN Screw Block;
+IdModule  = 2PIN_Screw_Block;
 EndCmp
 
 BeginCmp
@@ -110,20 +110,6 @@ TimeStamp = /4FE6092B;
 Reference = D2;
 ValeurCmp = LED;
 IdModule  = LED-0805;
-EndCmp
-
-BeginCmp
-TimeStamp = /4FE60998;
-Reference = D3;
-ValeurCmp = DIODE;
-IdModule  = SM0805;
-EndCmp
-
-BeginCmp
-TimeStamp = /4FE60989;
-Reference = D4;
-ValeurCmp = DIODE;
-IdModule  = SM0805;
 EndCmp
 
 BeginCmp
@@ -180,6 +166,13 @@ TimeStamp = /505F5A61;
 Reference = P1;
 ValeurCmp = CONN_3X2;
 IdModule  = pin_array_3x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /50A08FF4;
+Reference = Q1;
+ValeurCmp = BC847;
+IdModule  = SOT23;
 EndCmp
 
 BeginCmp
@@ -260,6 +253,13 @@ IdModule  = SM0805;
 EndCmp
 
 BeginCmp
+TimeStamp = /50A0901F;
+Reference = R12;
+ValeurCmp = 4k7;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
 TimeStamp = /50594DD1;
 Reference = U1;
 ValeurCmp = UA78L05;
@@ -278,6 +278,13 @@ TimeStamp = /505E169A;
 Reference = U3;
 ValeurCmp = ULN2803;
 IdModule  = SOIC-18;
+EndCmp
+
+BeginCmp
+TimeStamp = /50CF407C;
+Reference = U4;
+ValeurCmp = JUMPER;
+IdModule  = jumper;
 EndCmp
 
 BeginCmp

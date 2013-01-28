@@ -1,4 +1,4 @@
-update=Sun 23 Sep 2012 11:06:56 AM CEST
+update=Tue 18 Dec 2012 06:25:22 AM CET
 version=1
 last_client=pcbnew
 [general]
@@ -56,20 +56,20 @@ EquName1=devcms
 [pcbnew]
 version=1
 LastNetListRead=MRDDC wisseldecoder.net
-PadDrlX=0
-PadDimH=1280
-PadDimV=394
-BoardThickness=630
-TxtPcbV=800
-TxtPcbH=600
-TxtModV=600
-TxtModH=600
-TxtModW=120
-VEgarde=100
-DrawLar=150
-EdgeLar=150
-TxtLar=120
-MSegLar=150
+PadDrill=1.016
+PadSizeH=1.524
+PadSizeV=1.524
+PcbTextSizeV=2.032
+PcbTextSizeH=1.524
+PcbTextThickness=0.3048
+ModuleTextSizeV=1.524
+ModuleTextSizeH=1.524
+ModuleTextSizeThickness=0.3048
+SolderMaskClearance=0.254
+SolderMaskMinWidth=0
+DrawSegmentWidth=0.381
+BoardOutlineThickness=0.381
+ModuleOutlineThickness=0.381
 [pcbnew/libraries]
 LibDir=/home/dirkjan/Projects/Own/Kicad_Library;/home/dirkjan/Projects/3rd_party/kicad-libs/modules;/home/dirkjan/Projects/3rd_party/Kicad_Part_Library
 LibName1=sockets
@@ -88,3 +88,4 @@ LibName13=c-smd
 LibName14=Crystals_RevB_25Apr2012
 LibName15=dp_devices
 LibName16=soic
+LibName17=/home/dirkjan/Projects/3rd_party/open-project/open-project
