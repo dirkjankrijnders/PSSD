@@ -1,4 +1,4 @@
-PCBNEW-BOARD Version 2 date Tue 18 Dec 2012 05:39:50 PM CET
+PCBNEW-BOARD Version 2 date Mon 28 Jan 2013 03:56:47 PM CET
 
 # Created by Pcbnew(2012-nov-02)-testing
 
@@ -7,6 +7,7 @@ encoding utf-8
 Units mm
 LayerCount 2
 EnabledLayers 1FFF8001
+VisibleLayers 00F08001
 Links 106
 NoConn 0
 Di -3.9624 55.86603 105.5624 112.53597
@@ -21,7 +22,7 @@ $EndGENERAL
 $SHEETDESCR
 Sheet A3 16535 11693
 Title ""
-Date "18 dec 2012"
+Date "28 jan 2013"
 Rev ""
 Comp ""
 Comment1 ""
@@ -61,7 +62,7 @@ Pad2MaskClearance 0.254
 SolderMaskMinWidth 0
 AuxiliaryAxisOrg 0 0
 VisibleElements 7FFFFFFF
-PcbPlotParams (pcbplotparams (layerselection 15761409) (usegerberextensions true) (excludeedgelayer false) (linewidth 60) (plotframeref false) (viasonmask false) (mode 1) (useauxorigin false) (hpglpennumber 1) (hpglpenspeed 20) (hpglpendiameter 15) (hpglpenoverlay 0) (psnegative false) (psa4output false) (plotreference true) (plotvalue true) (plotothertext true) (plotinvisibletext false) (padsonsilk true) (subtractmaskfromsilk false) (outputformat 1) (mirror false) (drillshape 0) (scaleselection 1) (outputdirectory "MRDDC Gerbers/"))
+PcbPlotParams (pcbplotparams (layerselection 284196865) (usegerberextensions true) (excludeedgelayer false) (linewidth 60) (plotframeref false) (viasonmask false) (mode 1) (useauxorigin false) (hpglpennumber 1) (hpglpenspeed 20) (hpglpendiameter 15) (hpglpenoverlay 0) (psnegative false) (psa4output false) (plotreference true) (plotvalue true) (plotothertext true) (plotinvisibletext false) (padsonsilk true) (subtractmaskfromsilk false) (outputformat 1) (mirror false) (drillshape 0) (scaleselection 1) (outputdirectory Output/Rev_1/))
 $EndSETUP
 
 $EQUIPOT
@@ -2319,19 +2320,19 @@ $EndPAD
 $EndMODULE M3 Standoff
 $DRAWSEGMENT
 Po 2 71.781 62.8898 71.781 58.8898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 2 29.781 62.8898 25.781 62.8898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 2 29.781 104.8898 29.781 108.8898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 2 71.781 104.8898 75.781 104.88898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $TEXTPCB
 Te "Servo:"
@@ -2395,19 +2396,19 @@ De 0 0 0 Normal
 $EndTEXTPCB
 $DRAWSEGMENT
 Po 0 25.781 104.8898 25.781 62.8868 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 0 71.7809 108.8898 29.781 108.8898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 0 75.781 62.8898 75.781 104.8898 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $DRAWSEGMENT
 Po 0 29.781 58.8899 71.781 58.8899 0.381
-De 28 0 900 0 0
+De 21 0 900 0 0
 $EndDRAWSEGMENT
 $TRACK
 Po 0 54.229 82.804 54.1655 82.804 0.254 -1
