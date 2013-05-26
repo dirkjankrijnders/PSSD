@@ -1,0 +1,10 @@
+
+firmware/Tiny2313/*
+
+*.srec
+
+*.lst
+
+*.s
+
+*.raw
