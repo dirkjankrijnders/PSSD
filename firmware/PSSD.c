@@ -18,6 +18,9 @@ uint8_t  EEMEM eAddB = 0xC0;
 uint8_t  EEMEM ePortA = 0;
 uint8_t  EEMEM ePortB = 2;
 
+uint16_t EEMEM eLastA = 30;
+uint16_t EEMEM eLastB = 30;
+
 int main() {
     /* Declare variables for addres and data */
     uint8_t                                 MM_Address;
@@ -34,10 +37,11 @@ int main() {
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11|(1<<WGM10));        // Inverted PWM
 	TCCR1B=(1<<CS12)|(1<<WGM12); // PRESCALER=/256 MODE 7(FAST PWM, TOP=0x03FF)
 	
-	OCR1A = 0xFF;
-	OCR1B = 0x1FF;
+	OCR1A = eeprom_read_word(&eLastA);
+	OCR1B = eeprom_read_word(&eLastB);
 
 	//Make sure OC1n are output
+	DDRD = 0;
 	DDRB|=(1<<PB4)|(1<<PB3); //PWM Pins as Out(1<<PD3)|
 	DDRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
 		
@@ -70,9 +74,11 @@ int main() {
         				/* Now depedning on value, set a output */
 						if (MM_Data == PortA) {
 							OCR1A = eeprom_read_word(&eShortA);
+							eeprom_write_word(&eLastA, OCR1A);
 							PORTD|=(1<<PD0);
 						} else if (MM_Data == PortA + 1) {
 							OCR1A = eeprom_read_word(&eLongA);
+							eeprom_write_word(&eLastA, OCR1A);
 							PORTD|=(1<<PD0);
 						}
 						
@@ -87,7 +93,6 @@ int main() {
 	       		if (!(MM_Data & 0x10))
 	       		{
 				/* Bit 4 high for activating a turnout?? */
-					PORTD = PORTD ^ (1<<PD6);
 	       			if (MM_Data & 0x08)
 	       			{
     	   				/* yes, process it, first remove bit 4 */
@@ -96,14 +101,32 @@ int main() {
 	       				/* Now depedning on value, set a output */
 						if (MM_Data == PortB) {
 							OCR1B = eeprom_read_word(&eShortB);
+							eeprom_write_word(&eLastB, OCR1B);
 							PORTD|=(1<<PD0);
 						} else if (MM_Data == PortB + 1) {
 							OCR1B = eeprom_read_word(&eLongB);
+							eeprom_write_word(&eLastB, OCR1B);
 							PORTD|=(1<<PD0);
 						}
 					}
 				}
 			}
 		}
-	}
+		
+		/* B1/B2/B3/$ as manual override */
+/*		if (PIND & (1<<PD3)){
+			PORTD = PORTD ^ (1<<PD6);
+			OCR1A = eeprom_read_word(&eShortA);
+			PORTD|=(1<<PD0);
+		} else if (PIND & (1<<PD4)){
+			OCR1A = eeprom_read_word(&eLongA);
+			PORTD|=(1<<PD0);
+		} else if (PIND & (1<<PD5)){
+			OCR1A = eeprom_read_word(&eShortB);
+			PORTD|=(1<<PD0);
+		} else if (PIND & (1<<PD1)){
+			OCR1A = eeprom_read_word(&eLongB);
+			PORTD|=(1<<PD0);
+		}*/
+	} // While
 }
