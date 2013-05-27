@@ -9,6 +9,8 @@
 #include <avr/interrupt.h> 
 #include "mm_module.h"
 
+#define DEBOUNCE_TIME 25
+
 uint16_t EEMEM eShortA = 30;
 uint16_t EEMEM eShortB = 30;
 uint16_t EEMEM eLongA = 50;
@@ -44,9 +46,10 @@ int main() {
 	DDRD = 0;
 	DDRB|=(1<<PB4)|(1<<PB3); //PWM Pins as Out(1<<PD3)|
 	DDRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
-		
 	
-//	uint8_t thrown[2] = {0, 0};
+	// Set pull-up resistors for buttons
+	PORTD = 0b00111010;
+
 	uint8_t AddA = eeprom_read_byte(&eAddA);
 	uint8_t AddB = eeprom_read_byte(&eAddB);
 	uint8_t PortA = eeprom_read_byte(&ePortA);
@@ -111,22 +114,37 @@ int main() {
 					}
 				}
 			}
-		}
+		} // New data
 		
-		/* B1/B2/B3/$ as manual override */
-/*		if (PIND & (1<<PD3)){
-			PORTD = PORTD ^ (1<<PD6);
-			OCR1A = eeprom_read_word(&eShortA);
-			PORTD|=(1<<PD0);
-		} else if (PIND & (1<<PD4)){
-			OCR1A = eeprom_read_word(&eLongA);
-			PORTD|=(1<<PD0);
-		} else if (PIND & (1<<PD5)){
-			OCR1A = eeprom_read_word(&eShortB);
-			PORTD|=(1<<PD0);
-		} else if (PIND & (1<<PD1)){
-			OCR1A = eeprom_read_word(&eLongB);
-			PORTD|=(1<<PD0);
-		}*/
+		/* B1/B2/B3/B4 as manual override */
+		if (~PIND & (1<<PD3)){
+			_delay_ms(DEBOUNCE_TIME);
+			if (~PIND & (1<<PD3)){
+				PORTD = PORTD & ~(1<<PD6);			
+				OCR1A = eeprom_read_word(&eShortA);
+				PORTD|=(1<<PD0);
+			}
+		} 
+		if (~PIND & (1<<PD4)){
+			_delay_ms(DEBOUNCE_TIME);
+			if (~PIND & (1<<PD4)){
+				OCR1A = eeprom_read_word(&eLongA);
+				PORTD|=(1<<PD0);
+			}
+		}
+		if (~PIND & (1<<PD5)){
+			_delay_ms(DEBOUNCE_TIME);
+			if (~PIND & (1<<PD5)){
+				OCR1B = eeprom_read_word(&eShortB);
+				PORTD|=(1<<PD0);
+			}
+		}
+		if (~PIND & (1<<PD1)){
+			_delay_ms(DEBOUNCE_TIME);
+			if (~PIND & (1<<PD1)){
+				OCR1B = eeprom_read_word(&eLongB);
+				PORTD|=(1<<PD0);
+			}
+		}
 	} // While
 }
