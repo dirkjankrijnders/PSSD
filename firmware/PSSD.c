@@ -136,25 +136,61 @@ int main() {
 		if (~PIND & (1<<PD3)){ // B1
 			_delay_ms(DEBOUNCE_TIME);
 			if (~PIND & (1<<PD3)){
-				if (state == NORMAL)
+				if (state == NORMAL){
 					state = SET_A;
-				
-				shortA = eeprom_read_word(&eShortA);
-				longA  = eeprom_read_word(&eLongA);
-				shortB = eeprom_read_word(&eShortB);
-				longB  = eeprom_read_word(&eLongB);
-				OCR1A = shortA;
-				OCR1B = shortB;
-				adjState = short_;
-			} else if (state == SET_A) {
-				state = SET_B;
-			} else if (state == SET_B) {
-				// Save values
-				eeprom_write_word(&eShortA, ShortA);
-				eeprom_write_word(&eLongA, LongA);
-				eeprom_write_word(&eShortB, ShortB);
-				eeprom_write_word(&eLongB, LongB);
-				state = NORMAL;
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+
+					
+					shortA = eeprom_read_word(&eShortA);
+					longA  = eeprom_read_word(&eLongA);
+					shortB = eeprom_read_word(&eShortB);
+					longB  = eeprom_read_word(&eLongB);
+					OCR1A = shortA;
+					OCR1B = shortB;
+					adjState = short_;
+					PORTD|=(1<<PD0);
+				} else if (state == SET_A) {
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					state = SET_B;
+				} else if (state == SET_B) {
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					_delay_ms(100);
+					PORTD |= (1<<PD6);
+					_delay_ms(100);
+					PORTD = PORTD ^ (1<<PD6);
+					// Save values
+					eeprom_write_word(&eShortA, shortA);
+					eeprom_write_word(&eLongA, longA);
+					eeprom_write_word(&eShortB, shortB);
+					eeprom_write_word(&eLongB, longB);
+					state = NORMAL;
+				}
 			}
 		} 
 		if (~PIND & (1<<PD4)){
@@ -176,6 +212,12 @@ int main() {
 						longB++;
 						OCR1B = longB;
 					}
+				} else if(state == NORMAL) {
+					if (OCR1A == longA)
+						OCR1A = shortA;
+					else
+						OCR1A = longA;
+					_delay_ms(1000);
 				}
 				PORTD|=(1<<PD0);
 			}
@@ -199,7 +241,13 @@ int main() {
 						longB--;
 						OCR1B = longB;
 					}
-				}
+				}/* else if(state == NORMAL) {
+					if (OCR1B == longB)
+						OCR1B = shortB;
+					else
+						OCR1B = longB;
+					_delay_ms(1000);
+				}*/
 				PORTD|=(1<<PD0);
 			}
 		}
@@ -228,6 +276,9 @@ int main() {
 					// TODO: Save address
 					state = NORMAL;
 				}
+				PORTD |= (1<<PD6);
+				_delay_ms(1000);
+				PORTD = PORTD ^ (1<<PD6);
 			}
 		}
 	} // While
