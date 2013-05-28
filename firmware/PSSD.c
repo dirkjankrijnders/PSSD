@@ -11,6 +11,14 @@
 
 #define DEBOUNCE_TIME 25
 
+void pssd_blink(uint8_t times) {
+	PORTD |= (1<<PD6);
+	for (uint8_t i = 0; i < times ; i++){
+		_delay_ms(100);
+		PORTD = PORTD ^ (1<<PD6);
+	}
+	};
+
 enum state{
 	NORMAL = 0,
 	SET_A,
@@ -35,7 +43,9 @@ uint8_t  EEMEM ePortB = 2;
 uint16_t EEMEM eLastA = 30;
 uint16_t EEMEM eLastB = 30;
 
-int main() {
+void main()  __attribute__ ((noreturn));
+
+void main() {
     /* Declare variables for addres and data */
     uint8_t                                 MM_Address;
     uint8_t                                 MM_Data;
@@ -74,7 +84,7 @@ int main() {
 	sei();
 
 	PORTD = PORTD ^ (1<<PD6);
-	while(1) {
+	for(;;) {
         /* New data received? */
         if ((MM_CheckForNewInfo(&MM_Address, &MM_Data) == MM_NEW_INFO) & (state == NORMAL))
         {
@@ -138,13 +148,7 @@ int main() {
 			if (~PIND & (1<<PD3)){
 				if (state == NORMAL){
 					state = SET_A;
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
+					pssd_blink(2);
 
 					
 					shortA = eeprom_read_word(&eShortA);
@@ -156,34 +160,10 @@ int main() {
 					adjState = short_;
 					PORTD|=(1<<PD0);
 				} else if (state == SET_A) {
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
+					pssd_blink(3);
 					state = SET_B;
 				} else if (state == SET_B) {
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
-					_delay_ms(100);
-					PORTD |= (1<<PD6);
-					_delay_ms(100);
-					PORTD = PORTD ^ (1<<PD6);
+					pssd_blink(4);
 					// Save values
 					eeprom_write_word(&eShortA, shortA);
 					eeprom_write_word(&eLongA, longA);
@@ -241,13 +221,13 @@ int main() {
 						longB--;
 						OCR1B = longB;
 					}
-				}/* else if(state == NORMAL) {
+				} else if(state == NORMAL) {
 					if (OCR1B == longB)
 						OCR1B = shortB;
 					else
 						OCR1B = longB;
 					_delay_ms(1000);
-				}*/
+				}
 				PORTD|=(1<<PD0);
 			}
 		}

@@ -67,7 +67,7 @@ AS	     = avr-as
 
 # Override is only needed by avr-lib build system.
 
-override CFLAGS	= -g -Wall $(OPTIMIZE) -mmcu=$(MCU_TARGET) $(DEFS) -DF_CPU=$(F_CPU) -std=c99
+override CFLAGS	= -g -Wall $(OPTIMIZE) -mmcu=$(MCU_TARGET) $(DEFS) -DF_CPU=$(F_CPU) -fshort-enums -Wl,--relax -ffreestanding -std=c99 -fwhole-program
 override LDFLAGS       = -Wl,-Map,$(PRG).map
 
 OBJCOPY	= avr-objcopy
