@@ -31,6 +31,8 @@ enum adjState {
 	long_
 } adjState;
 
+uint8_t setAddress = 1;
+
 uint16_t EEMEM eShortA = 30;
 uint16_t EEMEM eShortB = 30;
 uint16_t EEMEM eLongA = 50;
@@ -86,59 +88,86 @@ void main() {
 	PORTD = PORTD ^ (1<<PD6);
 	for(;;) {
         /* New data received? */
-        if ((MM_CheckForNewInfo(&MM_Address, &MM_Data) == MM_NEW_INFO) & (state == NORMAL))
-        {
-        	/* Address valid, check if bit 4 of MC145027 data is high */
-        	if (MM_Address == AddA)
-        	{
-				/* If a 'normal' function bit is present (turnout) process it */
-        		if (!(MM_Data & 0x10))
+        if (MM_CheckForNewInfo(&MM_Address, &MM_Data) == MM_NEW_INFO) {
+			if (state == NORMAL) {
+        	
+        		/* Address valid, check if bit 4 of MC145027 data is high */
+        		if (MM_Address == AddA)
         		{
-        			/* Bit 4 high for activating a turnout?? */
-        			if (MM_Data & 0x08)
+					/* If a 'normal' function bit is present (turnout) process it */
+        			if (!(MM_Data & 0x10))
         			{
-        				/* yes, process it, first remove bit 4 */
-        				MM_Data -= 8;
-           	       	   		
-        				/* Now depedning on value, set a output */
-						if (MM_Data == PortA) {
-							OCR1A = shortA;
-							eeprom_write_word(&eLastA, OCR1A);
-							PORTD|=(1<<PD0);
-						} else if (MM_Data == PortA + 1) {
-							OCR1A = longA;
-							eeprom_write_word(&eLastA, OCR1A);
-							PORTD|=(1<<PD0);
-						}
-						
-						/* Restore MM_Data for next servo */
-						MM_Data += 8;
-					}
-				}
-			}
-			if (MM_Address == AddB)
-			{
-				/* If a 'normal' function bit is present (turnout) process it */
-	       		if (!(MM_Data & 0x10))
-	       		{
-				/* Bit 4 high for activating a turnout?? */
-	       			if (MM_Data & 0x08)
-	       			{
-    	   				/* yes, process it, first remove bit 4 */
-	       				MM_Data -= 8;
-            	  	   		
-	       				/* Now depedning on value, set a output */
-						if (MM_Data == PortB) {
-							OCR1B = shortB;
-							eeprom_write_word(&eLastB, OCR1B);
-							PORTD|=(1<<PD0);
-						} else if (MM_Data == PortB + 1) {
-							OCR1B = longB;
-							eeprom_write_word(&eLastB, OCR1B);
-							PORTD|=(1<<PD0);
+        				/* Bit 4 high for activating a turnout?? */
+        				if (MM_Data & 0x08)
+        				{
+        					/* yes, process it, first remove bit 4 */
+        					MM_Data -= 8;
+        	   	       	   		
+        					/* Now depedning on value, set a output */
+							if (MM_Data == PortA) {
+								OCR1A = shortA;
+								eeprom_write_word(&eLastA, OCR1A);
+								PORTD|=(1<<PD0);
+							} else if (MM_Data == PortA + 1) {
+								OCR1A = longA;
+								eeprom_write_word(&eLastA, OCR1A);
+								PORTD|=(1<<PD0);
+							}
+							
+							/* Restore MM_Data for next servo */
+							MM_Data += 8;
 						}
 					}
 				}
+				if (MM_Address == AddB)
+				{
+					/* If a 'normal' function bit is present (turnout) process it */
+	    	   		if (!(MM_Data & 0x10))
+	    	   		{
+					/* Bit 4 high for activating a turnout?? */
+	    	   			if (MM_Data & 0x08)
+	    	   			{
+    		   				/* yes, process it, first remove bit 4 */
+	    	   				MM_Data -= 8;
+        	    	  	   		
+	    	   				/* Now depedning on value, set a output */
+							if (MM_Data == PortB) {
+								OCR1B = shortB;
+								eeprom_write_word(&eLastB, OCR1B);
+								PORTD|=(1<<PD0);
+							} else if (MM_Data == PortB + 1) {
+								OCR1B = longB;
+								eeprom_write_word(&eLastB, OCR1B);
+								PORTD|=(1<<PD0);
+							}
+						}
+					}
+				}
+			} else if (state == SET_ADDRESS) {
+				if (MM_Data & 0x08 & !(MM_Data & 0x10)){ // Valid turnout activation
+					if (setAddress) // A
+					{
+						AddA  = MM_Address;
+						PortA = MM_Data - 8;
+						setAddress--;
+						pssd_blink(2);
+						_delay_ms(500);
+						pssd_blink(1);
+				} else { // B
+						AddB  = MM_Address;
+						PortB = MM_Data - 8;
+						setAddress++;
+						eeprom_write_byte(&eAddA, AddA);
+						eeprom_write_byte(&eAddB, AddB);
+						eeprom_write_byte(&ePortA, PortA);
+						eeprom_write_byte(&ePortB, PortB);
+						pssd_blink(2);
+						_delay_ms(500);
+						pssd_blink(2);
+						state = NORMAL;
+					}
+				}
+				
 			}
 		} // New data
 		
@@ -252,9 +281,6 @@ void main() {
 					}
 				} else if (state == NORMAL) {
 					state = SET_ADDRESS;
-				} else if (state == SET_ADDRESS) {
-					// TODO: Save address
-					state = NORMAL;
 				}
 				PORTD |= (1<<PD6);
 				_delay_ms(1000);
