@@ -10,6 +10,26 @@
 #include "mm_module.h"
 
 #define DEBOUNCE_TIME 25
+#define ADJ_DELAY 50
+#define MAX_CNT 5000
+#define MIN_CNT 20
+
+#ifndef ADD_A
+#define ADD_A 0xB0
+#endif
+
+#ifndef ADD_B
+#define ADD_B 0x20
+#endif
+
+#ifndef PORT_A
+#define PORT_A 0
+#endif
+
+#ifndef PORT_B
+#define PORT_B 2
+#endif
+
 
 void pssd_blink(uint8_t times) {
 	PORTD |= (1<<PD6);
@@ -33,17 +53,17 @@ enum adjState {
 
 uint8_t setAddress = 1;
 
-uint16_t EEMEM eShortA = 30;
-uint16_t EEMEM eShortB = 30;
-uint16_t EEMEM eLongA = 50;
-uint16_t EEMEM eLongB = 50;
-uint8_t  EEMEM eAddA = 0xC0;
-uint8_t  EEMEM eAddB = 0xC0;
-uint8_t  EEMEM ePortA = 0;
-uint8_t  EEMEM ePortB = 2;
+uint16_t EEMEM eShortA = 1250;
+uint16_t EEMEM eShortB = 1250;
+uint16_t EEMEM eLongA = 1500;
+uint16_t EEMEM eLongB = 1500;
+uint8_t  EEMEM eAddA = ADD_A ;
+uint8_t  EEMEM eAddB = ADD_B ;
+uint8_t  EEMEM ePortA = PORT_A ;
+uint8_t  EEMEM ePortB = PORT_B ;
 
-uint16_t EEMEM eLastA = 30;
-uint16_t EEMEM eLastB = 30;
+uint16_t EEMEM eLastA = 1250;
+uint16_t EEMEM eLastB = 1250;
 
 void main()  __attribute__ ((noreturn));
 
@@ -59,9 +79,12 @@ void main() {
 	// Count to 0x00FF => Prescaler /1024 => 38 Hz
 	// Count to 0x01FF => Prescaler /256  => 76 Hz
 	// Count to 0x03FF => Prescaler /256  => 38 Hz
+	// Count to 250000 => Prescaler /8    => 50 Hz
 	// Lowest prescaler (/256) gives best resolution
-	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11|(1<<WGM10));        // Inverted PWM
-	TCCR1B=(1<<CS12)|(1<<WGM12); // PRESCALER=/256 MODE 7(FAST PWM, TOP=0x03FF)
+	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);//|(1<<WGM10);        // Inverted PWM
+	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
+	ICR1 = 25000;
+	// Measured resolution: 22 uS
 	
 	OCR1A = eeprom_read_word(&eLastA);
 	OCR1B = eeprom_read_word(&eLastB);
@@ -208,18 +231,30 @@ void main() {
 				if (state == SET_A) {
 					if (adjState == short_) {
 						shortA++;
+						if (shortA > MAX_CNT)
+							shortA = MAX_CNT;
 						OCR1A = shortA;
+						_delay_ms(ADJ_DELAY);
 					} else {
 						longA++;
+						if (longA > MAX_CNT)
+							longA = MAX_CNT;
 						OCR1A = longA;
+						_delay_ms(ADJ_DELAY);
 					}
 				} else if (state == SET_B)  {
 					if (adjState == short_) {
 						shortB++;
+						if (shortB > MAX_CNT)
+							shortB = MAX_CNT;
 						OCR1B = shortB;
+						_delay_ms(ADJ_DELAY);
 					} else {
 						longB++;
+						if (longB > MAX_CNT)
+							longB = MAX_CNT;
 						OCR1B = longB;
+						_delay_ms(ADJ_DELAY);
 					}
 				} else if(state == NORMAL) {
 					if (OCR1A == longA)
@@ -237,17 +272,25 @@ void main() {
 				if (state == SET_A) {
 					if (adjState == short_) {
 						shortA--;
+						if (shortA < MIN_CNT)
+							shortA = MIN_CNT;
 						OCR1A = shortA;
 					} else {
 						longA--;
+						if (longA < MIN_CNT)
+							longA = MIN_CNT;
 						OCR1A = longA;
 					}
 				} else if (state == SET_B)  {
 					if (adjState == short_) {
 						shortB--;
+						if (shortB < MIN_CNT)
+							shortB = MIN_CNT;
 						OCR1B = shortB;
 					} else {
 						longB--;
+						if (longB < MIN_CNT)
+							longB = MIN_CNT;
 						OCR1B = longB;
 					}
 				} else if(state == NORMAL) {
@@ -280,7 +323,11 @@ void main() {
 						adjState = short_;
 					}
 				} else if (state == NORMAL) {
+					pssd_blink(2);
 					state = SET_ADDRESS;
+				} else if (state == SET_ADDRESS) {
+					pssd_blink(2);
+					state = NORMAL;
 				}
 				PORTD |= (1<<PD6);
 				_delay_ms(1000);

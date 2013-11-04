@@ -1,1 +1,1 @@
-avrdude -c buspirate -P /dev/tty.usbmodem00000001 -p atmega48 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m 
+avrdude -c buspirate -P /dev/tty.usbmodem00000001 -p t2313 -U lfuse:w:0xff:m -U hfuse:w:0x99:m 
