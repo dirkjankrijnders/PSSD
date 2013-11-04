@@ -8,3 +8,5 @@ firmware/Tiny2313/*
 *.s
 
 *.raw
+
+*.net
