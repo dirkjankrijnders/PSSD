@@ -9,6 +9,14 @@
 /* Begin PBXFileReference section */
 		4079525F0CEA38CC00E202DC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		900B9D44183E865000D54F1C /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PSSD.c; sourceTree = "<group>"; };
+		900B9D45183E88BF00D54F1C /* usiTwiSlave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usiTwiSlave.c; path = usiTwi/usiTwiSlave.c; sourceTree = "<group>"; };
+		900B9D46183E88BF00D54F1C /* usiTwiSlave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usiTwiSlave.h; path = usiTwi/usiTwiSlave.h; sourceTree = "<group>"; };
+		90EA24EB183FAAB9002BE167 /* PSSDUtil.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = PSSDUtil.py; path = util/pyBusPirateLite/PSSDUtil.py; sourceTree = SOURCE_ROOT; };
+		90EA24EC1840F389002BE167 /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmd.c; path = usitwir/src/cmd.c; sourceTree = "<group>"; };
+		90EA24EE1840F389002BE167 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		90EA24EF1840F389002BE167 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		90EA24F01840F389002BE167 /* slave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slave.c; path = usitwir/src/slave.c; sourceTree = "<group>"; };
+		90EA24F11840F389002BE167 /* slave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slave.h; path = usitwir/src/slave.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -22,10 +30,35 @@
 		4079525D0CEA38CC00E202DC /* firmware */ = {
 			isa = PBXGroup;
 			children = (
+				90EA24F21840F394002BE167 /* USITWI */,
 				900B9D44183E865000D54F1C /* PSSD.c */,
+				900B9D45183E88BF00D54F1C /* usiTwiSlave.c */,
+				900B9D46183E88BF00D54F1C /* usiTwiSlave.h */,
+				90EA24EB183FAAB9002BE167 /* PSSDUtil.py */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
 			);
 			path = firmware;
+			sourceTree = "<group>";
+		};
+		90EA24ED1840F389002BE167 /* slave */ = {
+			isa = PBXGroup;
+			children = (
+				90EA24EE1840F389002BE167 /* macros.h */,
+				90EA24EF1840F389002BE167 /* target.h */,
+			);
+			name = slave;
+			path = usitwir/src/slave;
+			sourceTree = "<group>";
+		};
+		90EA24F21840F394002BE167 /* USITWI */ = {
+			isa = PBXGroup;
+			children = (
+				90EA24EC1840F389002BE167 /* cmd.c */,
+				90EA24ED1840F389002BE167 /* slave */,
+				90EA24F01840F389002BE167 /* slave.c */,
+				90EA24F11840F389002BE167 /* slave.h */,
+			);
+			name = USITWI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

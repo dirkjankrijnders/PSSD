@@ -20,7 +20,7 @@
 DEVICE     = attiny85
 CLOCK      = 10000000
 PROGRAMMER = -c dragon -P usb
-OBJECTS    = PSSD.o usiTwi/usiTwiSlave.c
+OBJECTS    = PSSD.o usitwir/src/slave.c
 LINK_OBJECTS = Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
 #INCLUDE    = -ITiny2313/Tiny2313MM/Obj/
 INCLUDE    = -ITiny45MM/Obj/
@@ -55,7 +55,7 @@ AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(INCLUDE)
 
 # symbolic targets:
-all:	PSSD.hex
+all:	PSSD.hex PSSD.eeprom.hex
 
 .c.o:
 	$(COMPILE) -c $< -o $@
@@ -96,6 +96,9 @@ PSSD.hex: PSSD.elf
 	avr-size --format=avr --mcu=$(DEVICE) PSSD.elf
 # If you have an EEPROM section, you must also create a hex file for the
 # EEPROM and add it to the "flash" target.
+
+PSSD.eeprom.hex: PSSD.elf
+	avr-objcopy -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@
 
 # Targets for code debugging and analysis:
 disasm:	PSSD.elf
