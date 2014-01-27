@@ -9,9 +9,21 @@
 /* Begin PBXFileReference section */
 		4079525F0CEA38CC00E202DC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		900B9D44183E865000D54F1C /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PSSD.c; sourceTree = "<group>"; };
-		900B9D45183E88BF00D54F1C /* usiTwiSlave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usiTwiSlave.c; path = usiTwi/usiTwiSlave.c; sourceTree = "<group>"; };
-		900B9D46183E88BF00D54F1C /* usiTwiSlave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usiTwiSlave.h; path = usiTwi/usiTwiSlave.h; sourceTree = "<group>"; };
-		90EA24EB183FAAB9002BE167 /* PSSDUtil.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; name = PSSDUtil.py; path = util/pyBusPirateLite/PSSDUtil.py; sourceTree = SOURCE_ROOT; };
+		9067E1CB184BCD20003B5F37 /* mm1sw.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mm1sw.c; sourceTree = "<group>"; };
+		90A9609718775DB4000330FD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		90A9609818775DB4000330FD /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
+		90A9609B18775DB4000330FD /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
+		90A9609C18775DB4000330FD /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		90A9609E18775DB4000330FD /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		90A9609F18775DB4000330FD /* register.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = register.c; sourceTree = "<group>"; };
+		90A960A018775DB4000330FD /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
+		90A960A118775DB4000330FD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		90A960A318775DB4000330FD /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
+		90A960A518775DB4000330FD /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		90A960A618775DB4000330FD /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		90A960A718775DB4000330FD /* slave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = slave.c; sourceTree = "<group>"; };
+		90A960A818775DB4000330FD /* slave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slave.h; sourceTree = "<group>"; };
+		90A960A918775DB4000330FD /* slave.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = slave.o; sourceTree = "<group>"; };
 		90EA24EC1840F389002BE167 /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmd.c; path = usitwir/src/cmd.c; sourceTree = "<group>"; };
 		90EA24EE1840F389002BE167 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		90EA24EF1840F389002BE167 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
@@ -32,12 +44,72 @@
 			children = (
 				90EA24F21840F394002BE167 /* USITWI */,
 				900B9D44183E865000D54F1C /* PSSD.c */,
-				900B9D45183E88BF00D54F1C /* usiTwiSlave.c */,
-				900B9D46183E88BF00D54F1C /* usiTwiSlave.h */,
-				90EA24EB183FAAB9002BE167 /* PSSDUtil.py */,
+				90A9609618775DB4000330FD /* usitwir */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
+				9067E1CB184BCD20003B5F37 /* mm1sw.c */,
 			);
 			path = firmware;
+			sourceTree = "<group>";
+		};
+		90A9609618775DB4000330FD /* usitwir */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609718775DB4000330FD /* .gitignore */,
+				90A9609818775DB4000330FD /* CHANGELOG.md */,
+				90A9609918775DB4000330FD /* examples */,
+				90A960A018775DB4000330FD /* LICENCE */,
+				90A960A118775DB4000330FD /* README.md */,
+				90A960A218775DB4000330FD /* src */,
+			);
+			path = usitwir;
+			sourceTree = "<group>";
+		};
+		90A9609918775DB4000330FD /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609A18775DB4000330FD /* cmd */,
+				90A9609D18775DB4000330FD /* register */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		90A9609A18775DB4000330FD /* cmd */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609B18775DB4000330FD /* cmd.c */,
+				90A9609C18775DB4000330FD /* Makefile */,
+			);
+			path = cmd;
+			sourceTree = "<group>";
+		};
+		90A9609D18775DB4000330FD /* register */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609E18775DB4000330FD /* Makefile */,
+				90A9609F18775DB4000330FD /* register.c */,
+			);
+			path = register;
+			sourceTree = "<group>";
+		};
+		90A960A218775DB4000330FD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				90A960A318775DB4000330FD /* cmd.c */,
+				90A960A418775DB4000330FD /* slave */,
+				90A960A718775DB4000330FD /* slave.c */,
+				90A960A818775DB4000330FD /* slave.h */,
+				90A960A918775DB4000330FD /* slave.o */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		90A960A418775DB4000330FD /* slave */ = {
+			isa = PBXGroup;
+			children = (
+				90A960A518775DB4000330FD /* macros.h */,
+				90A960A618775DB4000330FD /* target.h */,
+			);
+			path = slave;
 			sourceTree = "<group>";
 		};
 		90EA24ED1840F389002BE167 /* slave */ = {

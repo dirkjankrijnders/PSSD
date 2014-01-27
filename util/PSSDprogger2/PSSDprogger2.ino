@@ -180,6 +180,7 @@ void change_add() {
   mySUI.print(temp/4);
   mySUI.print("Port: ");
   mySUI.println(temp % ((temp/4)));
+  mySUI.println(temp, HEX);
   I2c.begin();
   I2c.write((uint8_t)0x10, (uint8_t)(ADD_A_REG + (current_servo * 0x10)), temp);
   I2c.end();
@@ -279,6 +280,10 @@ void show_info () {
   mySUI.print("Connected to ");
   if (dev.type == 0x01){
     mySUI.println("PSSD Servo/Switch decoder");
+  } else {
+    mySUI.print("Unknown hardware (");
+    mySUI.print(dev.type, HEX);
+    mySUI.println(")");
   };
   mySUI.print("Hardware version: ");
   mySUI.println(dev.hw_ver);
@@ -346,6 +351,7 @@ void loop()
       mySUI.handleRequests();
     }
 
-  } 
+  }
+ // show_info(); 
 }
 

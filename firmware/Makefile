@@ -17,14 +17,16 @@
 #                   default_serial = "avrdoper"
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-DEVICE     = attiny85
+DEVICE     = attiny2313 #attiny85
 CLOCK      = 10000000
-PROGRAMMER = -c dragon -P usb
-OBJECTS    = PSSD.o usitwir/src/slave.c
+PROGRAMMER = -c dragon_isp -P usb -B 4
+#PROGRAMMER = -c buspirate -P /dev/tty.usbmodem00000001
+OBJECTS    = PSSD.o usitwir/src/slave.o
 LINK_OBJECTS = Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
-#INCLUDE    = -ITiny2313/Tiny2313MM/Obj/
-INCLUDE    = -ITiny45MM/Obj/
-FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
+
+INCLUDE    = -ITiny2313/Tiny2313MM/Obj/
+#INCLUDE    = -ITiny45MM/Obj/
+FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xff:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
 # Example for 8 MHz internal oscillator
@@ -72,6 +74,8 @@ all:	PSSD.hex PSSD.eeprom.hex
 
 flash:	all
 	$(AVRDUDE) -U flash:w:PSSD.hex:i
+	sleep 2
+	$(AVRDUDE) -U eeprom:w:PSSD.eeprom.hex:i
 
 fuse:
 	$(AVRDUDE) $(FUSES)
