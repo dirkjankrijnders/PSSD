@@ -8,7 +8,8 @@
 #include <avr/eeprom.h>
 #include <avr/interrupt.h>
 #include "usitwir/src/slave.h"
-#include "mm_module.h"
+//#include "mm_module.h"
+#include "mm1acc/mm1acc.h"
 
 #if defined( __AVR_ATtiny2313__ )
 #define t2313
@@ -92,11 +93,13 @@ int main()  __attribute__ ((noreturn));
 
 int main() {
     /* Declare variables for addres and data */
-    uint8_t                                 MM_Address;
-    uint8_t                                 MM_Data;
+//    uint8_t                                 MM_Address;
+//    uint8_t                                 MM_Data;
+	acc_data data;
 	
     /* Initialize the MM module */
     //MM_Module_Init();
+	mm1acc_init();
 	
 	
 	// Setup timer1 in PWM mode 7. We need a frequency around 40 Hz and the uC runs at 10 MHz => factor 250.000
@@ -116,7 +119,7 @@ int main() {
 	
 	DDRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
 	//PORTD = 0b00111010;
-	
+	PORTD |= (1<<PD0) | (1<<PD6);
 	//PORTB = PORTB^ (1<<PB3);*/
 #endif
 #ifdef t25 // Won't work because the resolution is too low
@@ -139,6 +142,10 @@ int main() {
 	//DRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
 	//    PORTB = 0x00;
     /* Initialize the I2C module */
+	
+	OCR1A = eeprom_read_word(&eLastA);
+	OCR1B = eeprom_read_word(&eLastB);
+
     usitwi_init();
 	sei();
 	for (;;) {
@@ -153,10 +160,32 @@ int main() {
 		shortB = eeprom_read_word(&eShortB);
 		longB = eeprom_read_word(&eLongB);
 		
-		OCR1A = eeprom_read_word(&eLastA);
-		OCR1B = eeprom_read_word(&eLastB);
 
 		for(;loop == 1;) {
+			if (mm1acc_check(&data)) {
+				// New data
+				if (data.address == AddA) {
+					if (data.function == 1) {
+						if (data.port == PortA) {
+							OCR1A = shortA;
+							eeprom_write_word(&eLastA, OCR1A);
+						} else if (data.port == PortA + 1) {
+							OCR1A = longA;
+							eeprom_write_word(&eLastA, OCR1A);
+						}
+					} else if (data.address == AddB) {
+						if (data.function == 1) {
+							if (data.port == PortB) {
+								OCR1B = shortB;
+								eeprom_write_word(&eLastB, OCR1B);
+							} else if (data.port == PortB + 1) {
+								OCR1B = longB;
+								eeprom_write_word(&eLastB, OCR1B);
+							}
+						}
+					}
+				}
+			}
 		} // While
 	}
 }
@@ -242,7 +271,7 @@ void usitwi_onWrite(uint8_t value) {
 				return;
 			case SHORT_A_REG_H:
 				eeprom_write_word(&eShortA, shortA + (value << 8));
-				//OCR1A = shortA;
+				OCR1A = shortA;
 				break;
 			case SHORT_B_REG_L:
 				shortB = value;
@@ -250,14 +279,14 @@ void usitwi_onWrite(uint8_t value) {
 			case SHORT_B_REG_H:
 				//				shortB = shortB + (value << 8);
 				eeprom_write_word(&eShortB, shortB + (value << 8));
-				//OCR1B = longB;
+				OCR1B = shortB;
 				break;
 			case LONG_A_REG_L:
 				longA = value;
 				return;
 			case LONG_A_REG_H:
 				eeprom_write_word(&eLongA, longA + (value << 8));
-				//OCR1A = longA;
+				OCR1A = longA;
 				break;
 			case LONG_B_REG_L:
 				longB = value;
@@ -265,7 +294,7 @@ void usitwi_onWrite(uint8_t value) {
 			case LONG_B_REG_H:
 				//				longB = longB + (value << 8);
 				eeprom_write_word(&eLongB, longB + (value << 8));
-				//OCR1B = longB;
+				OCR1B = longB;
 				break;
 			case POSITION_A_REG:
 				if (value == 0x00) {
