@@ -17,14 +17,14 @@
 #                   default_serial = "avrdoper"
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-DEVICE     = attiny2313 #attiny85
+DEVICE     = attiny2313 #attiny84 #attiny2313 #attiny85
 CLOCK      = 10000000
 PROGRAMMER = -c dragon_isp -P usb -B 4
 #PROGRAMMER = -c buspirate -P /dev/tty.usbmodem00000001
-OBJECTS    = PSSD.o usitwir/src/slave.o
-LINK_OBJECTS = Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
+OBJECTS    = PSSD.o usitwir/src/slave.o mm1acc/mm1acc.o
+LINK_OBJECTS = #Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
 
-INCLUDE    = -ITiny2313/Tiny2313MM/Obj/
+INCLUDE    = -Imm1acc
 #INCLUDE    = -ITiny45MM/Obj/
 FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xff:m
 
