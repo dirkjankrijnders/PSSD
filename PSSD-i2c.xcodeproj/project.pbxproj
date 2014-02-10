@@ -23,7 +23,12 @@
 		90A960A618775DB4000330FD /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
 		90A960A718775DB4000330FD /* slave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = slave.c; sourceTree = "<group>"; };
 		90A960A818775DB4000330FD /* slave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slave.h; sourceTree = "<group>"; };
-		90A960A918775DB4000330FD /* slave.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = slave.o; sourceTree = "<group>"; };
+		90D602F61896A4A300FFF4BA /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		90D602F71896A4A300FFF4BA /* keywords.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		90D602F81896A4A300FFF4BA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		90D602F91896A4A300FFF4BA /* mm1acc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mm1acc.c; sourceTree = "<group>"; };
+		90D602FA1896A4A300FFF4BA /* mm1acc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mm1acc.h; sourceTree = "<group>"; };
+		90D602FB1896A4A300FFF4BA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		90EA24EC1840F389002BE167 /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmd.c; path = usitwir/src/cmd.c; sourceTree = "<group>"; };
 		90EA24EE1840F389002BE167 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		90EA24EF1840F389002BE167 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
@@ -42,6 +47,7 @@
 		4079525D0CEA38CC00E202DC /* firmware */ = {
 			isa = PBXGroup;
 			children = (
+				90D602F51896A4A300FFF4BA /* mm1acc */,
 				90EA24F21840F394002BE167 /* USITWI */,
 				900B9D44183E865000D54F1C /* PSSD.c */,
 				90A9609618775DB4000330FD /* usitwir */,
@@ -98,7 +104,6 @@
 				90A960A418775DB4000330FD /* slave */,
 				90A960A718775DB4000330FD /* slave.c */,
 				90A960A818775DB4000330FD /* slave.h */,
-				90A960A918775DB4000330FD /* slave.o */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -110,6 +115,19 @@
 				90A960A618775DB4000330FD /* target.h */,
 			);
 			path = slave;
+			sourceTree = "<group>";
+		};
+		90D602F51896A4A300FFF4BA /* mm1acc */ = {
+			isa = PBXGroup;
+			children = (
+				90D602F61896A4A300FFF4BA /* .gitignore */,
+				90D602F71896A4A300FFF4BA /* keywords.txt */,
+				90D602F81896A4A300FFF4BA /* LICENSE */,
+				90D602F91896A4A300FFF4BA /* mm1acc.c */,
+				90D602FA1896A4A300FFF4BA /* mm1acc.h */,
+				90D602FB1896A4A300FFF4BA /* README.md */,
+			);
+			path = mm1acc;
 			sourceTree = "<group>";
 		};
 		90EA24ED1840F389002BE167 /* slave */ = {
