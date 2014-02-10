@@ -57,6 +57,21 @@ along with Usitwi.  If not, see <http://www.gnu.org/licenses/>.
 #  define USI_OVERFLOW_VECTOR USI_OVF_vect
 #endif
 
+#if defined( __AVR_ATtiny24__ ) | \
+defined( __AVR_ATtiny44__ ) | \
+defined( __AVR_ATtiny84__ )
+#  define DDR_USI             DDRA
+#  define PORT_USI            PORTA
+#  define PIN_USI             PINA
+#  define PORT_USI_SDA        PA6
+#  define PORT_USI_SCL        PA4
+#  define PIN_USI_SDA         PINA6
+#  define PIN_USI_SCL         PINA4
+#  define USI_START_COND_INT  USISIF
+#  define USI_START_VECTOR    USI_START_vect
+#  define USI_OVERFLOW_VECTOR USI_OVF_vect
+#endif
+
 #if defined( __AVR_ATtiny26__ )
 #  define DDR_USI             DDRB
 #  define PORT_USI            PORTB
