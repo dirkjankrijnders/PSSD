@@ -63,6 +63,7 @@ defined( __AVR_ATtiny85__ )
 
 uint8_t usitwi_address = 0x10;
 uint8_t currentRegister = NULL_REGISTER;
+uint8_t temp = 0;
 
 uint16_t EEMEM eShortA = 1250;
 uint16_t EEMEM eShortB = 1250;
@@ -143,8 +144,6 @@ int main() {
 	//    PORTB = 0x00;
     /* Initialize the I2C module */
 	
-	OCR1A = eeprom_read_word(&eLastA);
-	OCR1B = eeprom_read_word(&eLastB);
 
     usitwi_init();
 	sei();
@@ -159,6 +158,9 @@ int main() {
 		PortB = eeprom_read_byte(&ePortB);
 		shortB = eeprom_read_word(&eShortB);
 		longB = eeprom_read_word(&eLongB);
+
+		OCR1A = eeprom_read_word(&eLastA);
+		OCR1B = eeprom_read_word(&eLastB);
 		
 
 		for(;loop == 1;) {
@@ -187,6 +189,7 @@ int main() {
 				}
 			}
 		} // While
+		PIND |= (1<<PD6);
 	}
 }
 
@@ -267,51 +270,54 @@ void usitwi_onWrite(uint8_t value) {
 				eeprom_write_byte(&eAddB, value);
 				break;
 			case SHORT_A_REG_L:
-				shortA = value;
+				temp = value;
 				return;
 			case SHORT_A_REG_H:
-				eeprom_write_word(&eShortA, shortA + (value << 8));
-				OCR1A = shortA;
+				shortA = temp + (value << 8);
+				eeprom_write_word(&eShortA, shortA);
+				eeprom_write_word(&eLastA, shortA);
+				//OCR1A = shortA;
 				break;
 			case SHORT_B_REG_L:
-				shortB = value;
+				temp = value;
 				return;
 			case SHORT_B_REG_H:
-				//				shortB = shortB + (value << 8);
-				eeprom_write_word(&eShortB, shortB + (value << 8));
-				OCR1B = shortB;
+				shortB = temp + (value << 8);
+				eeprom_write_word(&eShortB, shortB);
+				eeprom_write_word(&eLastB, shortB);
 				break;
 			case LONG_A_REG_L:
-				longA = value;
+				temp = value;
 				return;
 			case LONG_A_REG_H:
-				eeprom_write_word(&eLongA, longA + (value << 8));
-				OCR1A = longA;
+				longA = temp + (value << 8);
+				eeprom_write_word(&eLongA, longA);
+				eeprom_write_word(&eLastA, longA);
 				break;
 			case LONG_B_REG_L:
-				longB = value;
+				temp = value;
 				break;
 			case LONG_B_REG_H:
-				//				longB = longB + (value << 8);
-				eeprom_write_word(&eLongB, longB + (value << 8));
-				OCR1B = longB;
+				longB = temp + (value << 8);
+				eeprom_write_word(&eLongB, longB);
+				eeprom_write_word(&eLastB, longB);
 				break;
 			case POSITION_A_REG:
 				if (value == 0x00) {
-					//					OCR1A = shortA;
+//					eeprom_write_word(&eLastA, A);
 					eeprom_write_word(&eLastA, shortA);
 				} else if (value == 0x01) {
-					//					OCR1A = longA;
+//					eeprom_write_word(&eLastA, longA);
 					eeprom_write_word(&eLastA, longA);
 				}
 				break;
 			case POSITION_B_REG:
 				if (value == 0x00) {
-					//					OCR1B = shortB;
+//					OCR1B = shortB;
 					eeprom_write_word(&eLastB, shortB);
 				} else if (value == 0x01) {
-					//					OCR1B = longB;
-					eeprom_write_word(&eLastB, shortB);
+//					OCR1B = longB;
+					eeprom_write_word(&eLastB, longB);
 				}
 				break;
 				
@@ -319,5 +325,7 @@ void usitwi_onWrite(uint8_t value) {
 				break;
 		}
 		loop = 0;
+		currentRegister++;
+//
 	}
 }

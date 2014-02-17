@@ -8,3 +8,6 @@ firmware/Tiny2313/*
 *.s
 
 *.raw
+
+firmware/eclipse/
+
