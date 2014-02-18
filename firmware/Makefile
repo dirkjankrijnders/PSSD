@@ -1,152 +1,112 @@
-PRG	    = PSSD
-OBJ	    = PSSD.c #servotest.c
-F_CPU	    = 10000000
-#MCU_TARGET     = atmega48
-#MCU_TARGET     = atmega328p
-#MCU_TARGET     = at90s2313
-#MCU_TARGET     = at90s2333
-#MCU_TARGET     = at90s4414
-#MCU_TARGET     = at90s4433
-#MCU_TARGET     = at90s4434
-#MCU_TARGET     = at90s8515
-#MCU_TARGET     = at90s8535
-#MCU_TARGET     = atmega128
-#MCU_TARGET     = atmega1280
-#MCU_TARGET     = atmega1281
-#MCU_TARGET     = atmega1284p
-#MCU_TARGET     = atmega16
-#MCU_TARGET     = atmega163
-#MCU_TARGET     = atmega164p
-#MCU_TARGET     = atmega165
-#MCU_TARGET     = atmega165p
-#MCU_TARGET     = atmega168
-#MCU_TARGET     = atmega169
-#MCU_TARGET     = atmega169p
-#MCU_TARGET     = atmega2560
-#MCU_TARGET     = atmega2561
-#MCU_TARGET     = atmega32
-#MCU_TARGET     = atmega324p
-#MCU_TARGET     = atmega325
-#MCU_TARGET     = atmega3250
-#MCU_TARGET     = atmega329
-#MCU_TARGET     = atmega3290
-#MCU_TARGET     = atmega64
-#MCU_TARGET     = atmega640
-#MCU_TARGET     = atmega644
-#MCU_TARGET     = atmega644p
-#MCU_TARGET     = atmega645
-#MCU_TARGET     = atmega6450
-#MCU_TARGET     = atmega649
-#MCU_TARGET     = atmega6490
-#MCU_TARGET     = atmega8
-#MCU_TARGET     = atmega8515
-#MCU_TARGET     = atmega8535
-#MCU_TARGET     = atmega88
-MCU_TARGET     = attiny2313
-#MCU_TARGET     = attiny24
-#MCU_TARGET     = attiny25
-#MCU_TARGET     = attiny26
-#MCU_TARGET     = attiny261
-#MCU_TARGET     = attiny44
-#MCU_TARGET     = attiny45
-#MCU_TARGET     = attiny461
-#MCU_TARGET     = attiny84
-#MCU_TARGET     = attiny85
-#MCU_TARGET     = attiny861
-OPTIMIZE       = -O2
+# Name: Makefile
+# Author: <insert your name here>
+# Copyright: <insert your copyright message here>
+# License: <insert your license reference here>
 
-MM_LIBDIR  = Tiny2313/Tiny2313MM
-ObjDir     = $(MM_LIBDIR)/Obj
-DEFS	   = -I$(MM_LIBDIR)/Obj
-LIBS	   = $(ObjDir)/mm_mod1.o $(ObjDir)/mm_mod2.o
+# This is a prototype Makefile. Modify it according to your needs.
+# You should at least check the settings for
+# DEVICE ....... The AVR device you compile for
+# CLOCK ........ Target AVR clock rate in Hertz
+# OBJECTS ...... The object files created from your source files. This list is
+#                usually the same as the list of source files with suffix ".o".
+# PROGRAMMER ... Options to avrdude which define the hardware you use for
+#                uploading to the AVR and the interface where this hardware
+#                is connected. We recommend that you leave it undefined and
+#                add settings like this to your ~/.avrduderc file:
+#                   default_programmer = "stk500v2"
+#                   default_serial = "avrdoper"
+# FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-# You should not have to change anything below here.
+DEVICE     = attiny2313 #attiny84 #attiny2313 #attiny85
+CLOCK      = 10000000
+PROGRAMMER = -c dragon_isp -P usb -B 4
+#PROGRAMMER = -c buspirate -P /dev/tty.usbmodem00000001
+OBJECTS    = PSSD.o usitwir/src/slave.o mm1acc/mm1acc.o
+LINK_OBJECTS = #Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
 
-CC	     = avr-gcc
-AS	     = avr-as
+INCLUDE    = -Imm1acc
+#INCLUDE    = -ITiny45MM/Obj/
+FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xff:m
 
-# Override is only needed by avr-lib build system.
+# ATMega8 fuse bits used above (fuse bits for other devices are different!):
+# Example for 8 MHz internal oscillator
+# Fuse high byte:
+# 0xd9 = 1 1 0 1   1 0 0 1 <-- BOOTRST (boot reset vector at 0x0000)
+#        ^ ^ ^ ^   ^ ^ ^------ BOOTSZ0
+#        | | | |   | +-------- BOOTSZ1
+#        | | | |   +---------- EESAVE (set to 0 to preserve EEPROM over chip erase)
+#        | | | +-------------- CKOPT (clock option, depends on oscillator type)
+#        | | +---------------- SPIEN (if set to 1, serial programming is disabled)
+#        | +------------------ WDTON (if set to 0, watchdog is always on)
+#        +-------------------- RSTDISBL (if set to 0, RESET pin is disabled)
+# Fuse low byte:
+# 0x24 = 0 0 1 0   0 1 0 0
+#        ^ ^ \ /   \--+--/
+#        | |  |       +------- CKSEL 3..0 (8M internal RC)
+#        | |  +--------------- SUT 1..0 (slowly rising power)
+#        | +------------------ BODEN (if 0, brown-out detector is enabled)
+#        +-------------------- BODLEVEL (if 0: 4V, if 1: 2.7V)
+#
+# For computing fuse byte values for other devices and options see
+# the fuse bit calculator at http://www.engbedded.com/fusecalc/
 
-override CFLAGS	= -g -Wall $(OPTIMIZE) -mmcu=$(MCU_TARGET) $(DEFS) -DF_CPU=$(F_CPU) -fshort-enums -Wl,--relax -ffreestanding -std=c99 -fwhole-program $(define)
-override LDFLAGS       = -Wl,-Map,$(PRG).map
 
-OBJCOPY	= avr-objcopy
-OBJDUMP	= avr-objdump
+# Tune the lines below only if you know what you are doing:
 
-all: $(PRG).elf lst text eeprom
+AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
+COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(INCLUDE)
 
-$(PRG).elf: $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIBS)
+# symbolic targets:
+all:	PSSD.hex PSSD.eeprom.hex
 
-# dependency:
-demo.o: demo.c iocompat.h
+.c.o:
+	$(COMPILE) -c $< -o $@
+
+.S.o:
+	$(COMPILE) -x assembler-with-cpp -c $< -o $@
+# "-x assembler-with-cpp" should not be necessary since this is the default
+# file type for the .S (with capital S) extension. However, upper case
+# characters are not always preserved on Windows. To ensure WinAVR
+# compatibility define the file type manually.
+
+.c.s:
+	$(COMPILE) -S $< -o $@
+
+flash:	all
+	$(AVRDUDE) -U flash:w:PSSD.hex:i
+	sleep 2
+	$(AVRDUDE) -U eeprom:w:PSSD.eeprom.hex:i
+
+fuse:
+	$(AVRDUDE) $(FUSES)
+
+# Xcode uses the Makefile targets "", "clean" and "install"
+install: flash fuse
+
+# if you use a bootloader, change the command below appropriately:
+load: all
+	bootloadHID PSSD.hex
 
 clean:
-	rm -rf *.o $(PRG).elf *.eps *.png *.pdf *.bak 
-	rm -rf *.lst *.map $(EXTRA_CLEAN_FILES)
+	rm -f PSSD.hex PSSD.elf $(OBJECTS)
 
-lst:  $(PRG).lst
+# file targets:
+PSSD.elf: $(OBJECTS)
+	$(COMPILE) -o PSSD.elf $(OBJECTS) $(LINK_OBJECTS)
 
-%.lst: %.elf
-	$(OBJDUMP) -h -S $< > $@
+PSSD.hex: PSSD.elf
+	rm -f PSSD.hex
+	avr-objcopy -j .text -j .data -O ihex PSSD.elf PSSD.hex
+	avr-size --format=avr --mcu=$(DEVICE) PSSD.elf
+# If you have an EEPROM section, you must also create a hex file for the
+# EEPROM and add it to the "flash" target.
 
-# Rules for building the .text rom images
+PSSD.eeprom.hex: PSSD.elf
+	avr-objcopy -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@
 
-text: hex bin srec
+# Targets for code debugging and analysis:
+disasm:	PSSD.elf
+	avr-objdump -d PSSD.elf
 
-hex:  $(PRG).hex
-bin:  $(PRG).bin
-srec: $(PRG).srec
-
-%.hex: %.elf
-	$(OBJCOPY) -j .text -j .data -O ihex $< $@
-
-%.srec: %.elf
-	$(OBJCOPY) -j .text -j .data -O srec $< $@
-
-%.bin: %.elf
-	$(OBJCOPY) -j .text -j .data -O binary $< $@
-
-# Rules for building the .eeprom rom images
-
-eeprom: ehex ebin esrec
-
-ehex:  $(PRG)_eeprom.hex
-ebin:  $(PRG)_eeprom.bin
-esrec: $(PRG)_eeprom.srec
-
-%_eeprom.hex: %.elf
-	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@ \
-	|| { echo empty $@ not generated; exit 0; }
-
-%_eeprom.srec: %.elf
-	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O srec $< $@ \
-	|| { echo empty $@ not generated; exit 0; }
-
-%_eeprom.bin: %.elf
-	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O binary $< $@ \
-	|| { echo empty $@ not generated; exit 0; }
-
-# Every thing below here is used by avr-libc's build system and can be ignored
-# by the casual user.
-
-FIG2DEV		 = fig2dev
-EXTRA_CLEAN_FILES       = *.hex *.bin *.srec
-
-dox: eps png pdf
-
-eps: $(PRG).eps
-png: $(PRG).png
-pdf: $(PRG).pdf
-
-%.eps: %.fig
-	$(FIG2DEV) -L eps $< $@
-
-%.pdf: %.fig
-	$(FIG2DEV) -L pdf $< $@
-
-%.png: %.fig
-	$(FIG2DEV) -L png $< $@
-
-upload: $(PRG).hex
-	avrdude -pm328p -carduino -P/dev/tty.usbserial-A700eEwx -b57600 -v -Uflash:w:$(PRG).hex:i
+cpp:
+	$(COMPILE) -E PSSD.c

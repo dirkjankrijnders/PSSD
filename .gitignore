@@ -9,4 +9,12 @@ firmware/Tiny2313/*
 
 *.raw
 
-*.net
+firmware/eclipse/
+
+
+Hardware/MRDDC wisseldecoder.bak
+
+Hardware/MRDDC wisseldecoder.net
+
+Hardware/MRDDC wisseldecoder-cache.lib
+

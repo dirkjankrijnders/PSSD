@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1A28C1C7-E798-4D2B-85CC-1A50DC21D312</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PSSD-i2c</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B2706AC3-F8FB-41DB-84E6-0359B8B4A83D</key>
+		<string>https://github.com/dirkjankrijnders/PSSD.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>firmware/PSSD-i2c.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B2706AC3-F8FB-41DB-84E6-0359B8B4A83D</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dirkjankrijnders/PSSD.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B2706AC3-F8FB-41DB-84E6-0359B8B4A83D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B2706AC3-F8FB-41DB-84E6-0359B8B4A83D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PSSD</string>
+		</dict>
+	</array>
+</dict>
+</plist>

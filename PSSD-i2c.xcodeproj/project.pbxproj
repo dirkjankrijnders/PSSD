@@ -1,0 +1,232 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		4079525F0CEA38CC00E202DC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		900B9D44183E865000D54F1C /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PSSD.c; sourceTree = "<group>"; };
+		9067E1CB184BCD20003B5F37 /* mm1sw.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mm1sw.c; sourceTree = "<group>"; };
+		90A9609718775DB4000330FD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		90A9609818775DB4000330FD /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
+		90A9609B18775DB4000330FD /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
+		90A9609C18775DB4000330FD /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		90A9609E18775DB4000330FD /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		90A9609F18775DB4000330FD /* register.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = register.c; sourceTree = "<group>"; };
+		90A960A018775DB4000330FD /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
+		90A960A118775DB4000330FD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		90A960A318775DB4000330FD /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
+		90A960A518775DB4000330FD /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		90A960A618775DB4000330FD /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		90A960A718775DB4000330FD /* slave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = slave.c; sourceTree = "<group>"; };
+		90A960A818775DB4000330FD /* slave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slave.h; sourceTree = "<group>"; };
+		90D602F61896A4A300FFF4BA /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		90D602F71896A4A300FFF4BA /* keywords.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		90D602F81896A4A300FFF4BA /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		90D602F91896A4A300FFF4BA /* mm1acc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mm1acc.c; sourceTree = "<group>"; };
+		90D602FA1896A4A300FFF4BA /* mm1acc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mm1acc.h; sourceTree = "<group>"; };
+		90D602FB1896A4A300FFF4BA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		90EA24EC1840F389002BE167 /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cmd.c; path = usitwir/src/cmd.c; sourceTree = "<group>"; };
+		90EA24EE1840F389002BE167 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
+		90EA24EF1840F389002BE167 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		90EA24F01840F389002BE167 /* slave.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = slave.c; path = usitwir/src/slave.c; sourceTree = "<group>"; };
+		90EA24F11840F389002BE167 /* slave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slave.h; path = usitwir/src/slave.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4079523B0CEA382200E202DC = {
+			isa = PBXGroup;
+			children = (
+				4079525D0CEA38CC00E202DC /* firmware */,
+			);
+			sourceTree = "<group>";
+		};
+		4079525D0CEA38CC00E202DC /* firmware */ = {
+			isa = PBXGroup;
+			children = (
+				90D602F51896A4A300FFF4BA /* mm1acc */,
+				90EA24F21840F394002BE167 /* USITWI */,
+				900B9D44183E865000D54F1C /* PSSD.c */,
+				90A9609618775DB4000330FD /* usitwir */,
+				4079525F0CEA38CC00E202DC /* Makefile */,
+				9067E1CB184BCD20003B5F37 /* mm1sw.c */,
+			);
+			path = firmware;
+			sourceTree = "<group>";
+		};
+		90A9609618775DB4000330FD /* usitwir */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609718775DB4000330FD /* .gitignore */,
+				90A9609818775DB4000330FD /* CHANGELOG.md */,
+				90A9609918775DB4000330FD /* examples */,
+				90A960A018775DB4000330FD /* LICENCE */,
+				90A960A118775DB4000330FD /* README.md */,
+				90A960A218775DB4000330FD /* src */,
+			);
+			path = usitwir;
+			sourceTree = "<group>";
+		};
+		90A9609918775DB4000330FD /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609A18775DB4000330FD /* cmd */,
+				90A9609D18775DB4000330FD /* register */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		90A9609A18775DB4000330FD /* cmd */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609B18775DB4000330FD /* cmd.c */,
+				90A9609C18775DB4000330FD /* Makefile */,
+			);
+			path = cmd;
+			sourceTree = "<group>";
+		};
+		90A9609D18775DB4000330FD /* register */ = {
+			isa = PBXGroup;
+			children = (
+				90A9609E18775DB4000330FD /* Makefile */,
+				90A9609F18775DB4000330FD /* register.c */,
+			);
+			path = register;
+			sourceTree = "<group>";
+		};
+		90A960A218775DB4000330FD /* src */ = {
+			isa = PBXGroup;
+			children = (
+				90A960A318775DB4000330FD /* cmd.c */,
+				90A960A418775DB4000330FD /* slave */,
+				90A960A718775DB4000330FD /* slave.c */,
+				90A960A818775DB4000330FD /* slave.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		90A960A418775DB4000330FD /* slave */ = {
+			isa = PBXGroup;
+			children = (
+				90A960A518775DB4000330FD /* macros.h */,
+				90A960A618775DB4000330FD /* target.h */,
+			);
+			path = slave;
+			sourceTree = "<group>";
+		};
+		90D602F51896A4A300FFF4BA /* mm1acc */ = {
+			isa = PBXGroup;
+			children = (
+				90D602F61896A4A300FFF4BA /* .gitignore */,
+				90D602F71896A4A300FFF4BA /* keywords.txt */,
+				90D602F81896A4A300FFF4BA /* LICENSE */,
+				90D602F91896A4A300FFF4BA /* mm1acc.c */,
+				90D602FA1896A4A300FFF4BA /* mm1acc.h */,
+				90D602FB1896A4A300FFF4BA /* README.md */,
+			);
+			path = mm1acc;
+			sourceTree = "<group>";
+		};
+		90EA24ED1840F389002BE167 /* slave */ = {
+			isa = PBXGroup;
+			children = (
+				90EA24EE1840F389002BE167 /* macros.h */,
+				90EA24EF1840F389002BE167 /* target.h */,
+			);
+			name = slave;
+			path = usitwir/src/slave;
+			sourceTree = "<group>";
+		};
+		90EA24F21840F394002BE167 /* USITWI */ = {
+			isa = PBXGroup;
+			children = (
+				90EA24EC1840F389002BE167 /* cmd.c */,
+				90EA24ED1840F389002BE167 /* slave */,
+				90EA24F01840F389002BE167 /* slave.c */,
+				90EA24F11840F389002BE167 /* slave.h */,
+			);
+			name = USITWI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		407952600CEA391500E202DC /* firmware */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = $ACTION;
+			buildConfigurationList = 407952610CEA393300E202DC /* Build configuration list for PBXLegacyTarget "firmware" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = firmware;
+			dependencies = (
+			);
+			name = firmware;
+			passBuildSettingsInEnvironment = 1;
+			productName = "Build All";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		4079523D0CEA382200E202DC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 4079523E0CEA382200E202DC /* Build configuration list for PBXProject "PSSD-i2c" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4079523B0CEA382200E202DC;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				407952600CEA391500E202DC /* firmware */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		407952400CEA382200E202DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		407952630CEA393300E202DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PATH = "$(PATH):/usr/local/CrossPack-AVR/bin";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4079523E0CEA382200E202DC /* Build configuration list for PBXProject "PSSD-i2c" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				407952400CEA382200E202DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		407952610CEA393300E202DC /* Build configuration list for PBXLegacyTarget "firmware" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				407952630CEA393300E202DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4079523D0CEA382200E202DC /* Project object */;
+}
