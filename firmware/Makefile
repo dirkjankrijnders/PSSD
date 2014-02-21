@@ -1,7 +1,7 @@
 # Name: Makefile
-# Author: <insert your name here>
-# Copyright: <insert your copyright message here>
-# License: <insert your license reference here>
+# Author: Dirkjan Krijnders
+# Copyright: 2014 Dirkjan Krijnders
+# License: CC BY-SA 3.0
 
 # This is a prototype Makefile. Modify it according to your needs.
 # You should at least check the settings for
@@ -17,15 +17,23 @@
 #                   default_serial = "avrdoper"
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
-DEVICE     = attiny2313 #attiny84 #attiny2313 #attiny85
+
+BOARD = PSSD
+
+ifeq ($(BOARD),PSSD)
+DEVICE     = attiny2313
 CLOCK      = 10000000
+else ifeq ($(BOARD),CSMD)
+DEVICE     = attiny44
+CLOCK      = 8000000
+else
+	echo "Unknown board"
+endif
+
 PROGRAMMER = -c dragon_isp -P usb -B 4
-#PROGRAMMER = -c buspirate -P /dev/tty.usbmodem00000001
 OBJECTS    = PSSD.o usitwir/src/slave.o mm1acc/mm1acc.o
-LINK_OBJECTS = #Tiny45MM/Obj/mm_mod1.o Tiny45MM/Obj/mm_mod2.o
 
 INCLUDE    = -Imm1acc
-#INCLUDE    = -ITiny45MM/Obj/
 FUSES      = -U hfuse:w:0xdf:m -U lfuse:w:0xff:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
@@ -60,7 +68,7 @@ COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(INCLUDE)
 all:	PSSD.hex PSSD.eeprom.hex
 
 .c.o:
-	$(COMPILE) -c $< -o $@
+	$(COMPILE) -c $< -o $@ -DBOARD=$(BOARD)
 
 .S.o:
 	$(COMPILE) -x assembler-with-cpp -c $< -o $@
@@ -82,10 +90,6 @@ fuse:
 
 # Xcode uses the Makefile targets "", "clean" and "install"
 install: flash fuse
-
-# if you use a bootloader, change the command below appropriately:
-load: all
-	bootloadHID PSSD.hex
 
 clean:
 	rm -f PSSD.hex PSSD.elf $(OBJECTS)

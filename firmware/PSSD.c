@@ -22,6 +22,14 @@ defined( __AVR_ATtiny85__ )
 #define t25
 #endif
 
+#ifndef BOARD
+#define BOARD PSSD
+#endif
+
+#define PSSD 0x02
+#define CSMD 0x03
+
+
 #ifndef ADD_A
 #define ADD_A 0xB0
 #endif
@@ -213,7 +221,7 @@ uint8_t usitwi_onRead() {
 		case HW_VERSION_REG:
 			return 0x01; // The 5x5 cm print, rev. 0
 		case FW_VERSION_REG:
-			return 0x02; // First I2C version
+			return BOARD; // First I2C version
 		case NAME_REG:
 			return 0xFF;
 		case ADD_A_REG:

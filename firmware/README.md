@@ -1,7 +1,9 @@
 PSSD Firmware
 ====
 
-The firmware in this repository supports two boards: the PSSD board for both marklin switch magnets and servos and the C-rail servo mount switch decoder found [https://github.com/dirkjankrijnders/Servo_mount](here).
+The firmware in this repository supports two boards: the PSSD board for both marklin switch magnets and servos and the C-rail servo mount switch decoder(CSMD) found (here)[https://github.com/dirkjankrijnders/Servo_mount]. 
+
+By default the firmware code compiles for PSSD with the I2C configuration interface. To compile for the CSMD use `make BOARD=CSMD`.
 
 LICENSE
 -------
