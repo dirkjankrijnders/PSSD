@@ -93,6 +93,14 @@ void usitwi_init() {
 
 }
 
+void usitwi_deinit() {
+	// Disable the usi as far as reasonable:
+	// - We leave the ports untouched as we have no idea whether they were input
+	//   or output.
+	// - We disable the interrupts and related USI settings:
+	
+	USICR = 0;
+}
 /*
  * # USI Start Condition
  */

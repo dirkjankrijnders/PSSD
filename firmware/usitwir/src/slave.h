@@ -26,5 +26,6 @@ along with Usitwi.  If not, see <http://www.gnu.org/licenses/>.
 #define _USI_TWI_SLAVE_H_
 
 void usitwi_init();
+void usitwi_deinit();
 
 #endif
