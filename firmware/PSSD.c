@@ -22,6 +22,12 @@ defined( __AVR_ATtiny85__ )
 #define t25
 #endif
 
+#if defined( __AVR_ATtiny24__ ) | \
+defined( __AVR_ATtiny44__ ) | \
+defined( __AVR_ATtiny84__ )
+#define t24
+#endif
+
 #ifndef BOARD
 #define BOARD PSSD
 #endif
@@ -98,25 +104,19 @@ uint16_t volatile longB  = 0;
 uint8_t volatile loop = 1;
 //uint8_t currentByte = 0;
 
-int main()  __attribute__ ((noreturn));
+#ifdef t24 //
+ISR(PCINT0_vect) {
+	if (PINA & (1 << PA3)) { // Rising flank, programmer attached!
+		usitwi_init(); // Enable the I2C interface
+	} else { // Falling flank, programmer detached!
+		usitwi_deinit();
+		loop = 0;
+		setup_servo_pwm();
+	}
+}
+#endif
 
-int main() {
-    /* Declare variables for addres and data */
-//    uint8_t                                 MM_Address;
-//    uint8_t                                 MM_Data;
-	acc_data data;
-	
-    /* Initialize the MM module */
-    //MM_Module_Init();
-	mm1acc_init();
-	
-	
-	// Setup timer1 in PWM mode 7. We need a frequency around 40 Hz and the uC runs at 10 MHz => factor 250.000
-	// Count to 0x00FF => Prescaler /1024 => 38 Hz
-	// Count to 0x01FF => Prescaler /256  => 76 Hz
-	// Count to 0x03FF => Prescaler /256  => 38 Hz
-	// Count to 250000 => Prescaler /8    => 50 Hz
-	// Lowest prescaler (/256) gives best resolution
+void setup_servo_pwm() {
 #ifdef t2313
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
@@ -130,6 +130,7 @@ int main() {
 	//PORTD = 0b00111010;
 	PORTD |= (1<<PD0) | (1<<PD6);
 	//PORTB = PORTB^ (1<<PB3);*/
+    usitwi_init();
 #endif
 #ifdef t25 // Won't work because the resolution is too low
 	TCCR1 |= (1<<CS12)|(1<<CS11)|(1<<CS10); // Prescaler to /1024 => f_TCK1 =~ 8kHz (7812.5 Hz)
@@ -142,18 +143,42 @@ int main() {
 	OCR1C = 0xFF;
 	
 	DDRB |= (1 << PB1) | (1 << PB4);
+    usitwi_init();
 	
 #endif
+#ifdef t24 //
+	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
+	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
+	ICR1 = 25000;
 	
-	//Make sure OC1n are output
-	//RD = 0;
-	//DRB|=(1<<PB4)|(1<<PB3); //PWM Pins as Out(1<<PD3)|
-	//DRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
-	//    PORTB = 0x00;
-    /* Initialize the I2C module */
 	
+	OCR1A = 0x1F; //eeprom_read_word(&eLastA);
+	OCR1B = 0x2F; //eeprom_read_word(&eLastB);
+	//	OCR1C = 0xFF;
+	
+	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
+	DDRA |= (1 << PA7); // Enable GND Fet as output
+	
+	// I2C Programmer attachment:
+	PCMSK0 |= (1 << PCINT3);
+	GIMSK |= (1 << PCIE0);
+#endif
+}
 
-    usitwi_init();
+int main()  __attribute__ ((noreturn));
+
+int main() {
+    /* Declare variables for addres and data */
+//    uint8_t                                 MM_Address;
+//    uint8_t                                 MM_Data;
+	acc_data data;
+	
+    /* Initialize the MM module */
+    //MM_Module_Init();
+	mm1acc_init();
+	
+	setup_servo_pwm();
+	//usitwi_init();
 	sei();
 	for (;;) {
 		loop = 1;
@@ -197,7 +222,7 @@ int main() {
 				}
 			}
 		} // While
-		PIND |= (1<<PD6);
+		// PIND |= (1<<PD6);
 	}
 }
 

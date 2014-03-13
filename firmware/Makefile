@@ -27,10 +27,11 @@ else ifeq ($(BOARD),CSMD)
 DEVICE     = attiny44
 CLOCK      = 8000000
 else
-	echo "Unknown board"
+	echo "Unknown board: $(BOARD)"
 endif
 
-PROGRAMMER = -c dragon_isp -P usb -B 4
+# @echo "Board: $(BOARD)"
+PROGRAMMER = -c dragon_isp -P usb 
 OBJECTS    = PSSD.o usitwir/src/slave.o mm1acc/mm1acc.o
 
 INCLUDE    = -Imm1acc
