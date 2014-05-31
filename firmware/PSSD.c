@@ -159,6 +159,8 @@ void setup_servo_pwm() {
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
 	DDRA |= (1 << PA7); // Enable GND Fet as output
 	
+	PORTA |= (1 << PA7);
+	
 	// I2C Programmer attachment:
 	PCMSK0 |= (1 << PCINT3);
 	GIMSK |= (1 << PCIE0);
