@@ -109,6 +109,8 @@ uint16_t volatile longB  = 0;
 uint8_t volatile loop = 1;
 //uint8_t currentByte = 0;
 
+void setup_servo_pwm();
+
 #ifdef t24 //
 ISR(PCINT0_vect) {
 	if (PINA & (1 << PA3)) { // Rising flank, programmer attached!
