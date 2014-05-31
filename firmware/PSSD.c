@@ -261,11 +261,11 @@ uint8_t usitwi_onRead() {
 		case ADD_B_REG:
 			return AddB;
 		case SHORT_A_REG_L:
-			return shortA & 0xFF;
+			return (eeprom_read_word(&eShortA)) & 0xFF;
 		case SHORT_A_REG_H:
-			return (shortA >> 8) & 0xFF;
+			return (eeprom_read_word(&eShortA) >> 8) & 0xFF;
 		case LONG_A_REG_L:
-			return longA & 0xFF;
+			return (eeprom_read_word(&eLongA)) & 0xFF;
 		case LONG_A_REG_H:
 			return (eeprom_read_word(&eLongA) >> 8) & 0xFF;
 		case SHORT_B_REG_L:
