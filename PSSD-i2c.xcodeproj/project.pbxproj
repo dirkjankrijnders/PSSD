@@ -9,6 +9,7 @@
 /* Begin PBXFileReference section */
 		4079525F0CEA38CC00E202DC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		900B9D44183E865000D54F1C /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PSSD.c; sourceTree = "<group>"; };
+		90582F4D18D2D44F00215505 /* PSSDProgrammer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PSSDProgrammer.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9067E1CB184BCD20003B5F37 /* mm1sw.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mm1sw.c; sourceTree = "<group>"; };
 		90A9609718775DB4000330FD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		90A9609818775DB4000330FD /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -40,6 +41,7 @@
 		4079523B0CEA382200E202DC = {
 			isa = PBXGroup;
 			children = (
+				90582F4D18D2D44F00215505 /* PSSDProgrammer.xcodeproj */,
 				4079525D0CEA38CC00E202DC /* firmware */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +57,13 @@
 				9067E1CB184BCD20003B5F37 /* mm1sw.c */,
 			);
 			path = firmware;
+			sourceTree = "<group>";
+		};
+		90582F4E18D2D44F00215505 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		90A9609618775DB4000330FD /* usitwir */ = {
@@ -174,7 +183,7 @@
 		4079523D0CEA382200E202DC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 4079523E0CEA382200E202DC /* Build configuration list for PBXProject "PSSD-i2c" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -185,6 +194,12 @@
 			);
 			mainGroup = 4079523B0CEA382200E202DC;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 90582F4E18D2D44F00215505 /* Products */;
+					ProjectRef = 90582F4D18D2D44F00215505 /* PSSDProgrammer.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				407952600CEA391500E202DC /* firmware */,
