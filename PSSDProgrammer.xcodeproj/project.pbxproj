@@ -9,10 +9,10 @@
 /* Begin PBXFileReference section */
 		4079525E0CEA38CC00E202DC /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		4079525F0CEA38CC00E202DC /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		900DF4F2193A51FA00BD60F0 /* keypad.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = keypad.c; path = lib/keypad.c; sourceTree = "<group>"; };
+		900DF4F3193A520800BD60F0 /* keypad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = keypad.h; path = lib/keypad.h; sourceTree = "<group>"; };
 		901425D818EF30D200F5F19F /* lcd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcd.c; path = lib/lcd.c; sourceTree = "<group>"; };
 		901425D918EF30D200F5F19F /* lcd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcd.h; path = lib/lcd.h; sourceTree = "<group>"; };
-		901425DB18EF358500F5F19F /* lcd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lcd.c; sourceTree = "<group>"; };
-		901425DC18EF358500F5F19F /* lcd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lcd.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -26,8 +26,6 @@
 		4079525D0CEA38CC00E202DC /* Programmer */ = {
 			isa = PBXGroup;
 			children = (
-				901425DB18EF358500F5F19F /* lcd.c */,
-				901425DC18EF358500F5F19F /* lcd.h */,
 				901425DA18EF357300F5F19F /* lib */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
 				4079525E0CEA38CC00E202DC /* main.c */,
@@ -40,6 +38,8 @@
 			children = (
 				901425D818EF30D200F5F19F /* lcd.c */,
 				901425D918EF30D200F5F19F /* lcd.h */,
+				900DF4F2193A51FA00BD60F0 /* keypad.c */,
+				900DF4F3193A520800BD60F0 /* keypad.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";
