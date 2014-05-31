@@ -112,6 +112,8 @@ uint8_t volatile loop = 1;
 #ifdef t24 //
 ISR(PCINT0_vect) {
 	if (PINA & (1 << PA3)) { // Rising flank, programmer attached!
+		
+		TCCR1B = 0; // Stop servo PWM
 		usitwi_init(); // Enable the I2C interface
 	} else { // Falling flank, programmer detached!
 		usitwi_deinit();
