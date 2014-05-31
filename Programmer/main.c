@@ -6,7 +6,7 @@
 
 #include <avr/io.h>
 
-#include "lcd.h"
+#include "lib/lcd.h"
 
 int main(void)
 {
