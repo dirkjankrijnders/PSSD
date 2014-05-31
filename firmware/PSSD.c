@@ -70,6 +70,11 @@ defined( __AVR_ATtiny84__ )
 #define LONG_B_REG_L 0x23
 #define LONG_B_REG_H 0x24
 
+#define LAST_A_REG_L 0x31
+#define LAST_A_REG_H 0x32
+#define LAST_B_REG_L 0x41
+#define LAST_B_REG_H 0x42
+
 #define POSITION_A_REG 0xE0
 #define POSITION_B_REG 0xF0
 
@@ -271,6 +276,14 @@ uint8_t usitwi_onRead() {
 			return (eeprom_read_word(&eLongB)) & 0xFF;
 		case LONG_B_REG_H:
 			return (eeprom_read_word(&eLongB) >> 8) & 0xFF;
+		case LAST_A_REG_L:
+			return (eeprom_read_word(&eLastA)) & 0xFF;
+		case LAST_A_REG_H:
+			return (eeprom_read_word(&eLastA) >> 8) & 0xFF;
+		case LAST_B_REG_L:
+			return (eeprom_read_word(&eLastB)) & 0xFF;
+		case LAST_B_REG_H:
+			return (eeprom_read_word(&eLastB) >> 8) & 0xFF;
 		case POSITION_A_REG:
 			if (OCR1A == shortA)
 				return 0x00;
