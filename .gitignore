@@ -20,3 +20,15 @@ Hardware/MRDDC wisseldecoder-cache.lib
 
 
 *.xcuserstate
+
+*.d
+
+*.xcworkspacedata
+
+*.xcscheme
+
+*.xccheckout
+
+PSSDProgrammer.xcodeproj/xcuserdata/dirkjan.xcuserdatad/xcschemes/xcschememanagement.plist
+
+PSSD-i2c.xcodeproj/project.xcworkspace/xcuserdata/dirkjan.xcuserdatad/UserInterfaceState.xcuserstate
