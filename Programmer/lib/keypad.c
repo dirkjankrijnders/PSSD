@@ -43,7 +43,6 @@ char keypad_read_key(uint8_t col) {
 			PORT_COL1 &= ~(1 << PIN_COL1);
 			key = PIN_ROWS >> 2;
 			DDR_COL1 &= ~(1 << PIN_COL1);
-			lcd_puts("a\0");
 			break;
 		case 2:
 			DDR_COL2 |= (1 << PIN_COL2);
@@ -68,5 +67,5 @@ char keypad_read_key(uint8_t col) {
 			break;
 	}
 
-	return key & 0x0F; // Only lower 4 bits
+	return (~key & 0x0F); // Only lower 4 bits
 }
