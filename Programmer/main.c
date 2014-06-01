@@ -8,6 +8,7 @@
 
 #include "lib/lcd.h"
 #include "lib/keypad.h"
+#include "lib/i2cmaster.h"
 
 int main(void)
 {
