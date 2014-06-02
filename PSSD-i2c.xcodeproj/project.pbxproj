@@ -11,6 +11,7 @@
 		900B9D44183E865000D54F1C /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PSSD.c; sourceTree = "<group>"; };
 		90582F4D18D2D44F00215505 /* PSSDProgrammer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PSSDProgrammer.xcodeproj; sourceTree = SOURCE_ROOT; };
 		9067E1CB184BCD20003B5F37 /* mm1sw.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mm1sw.c; sourceTree = "<group>"; };
+		9087266B193CC63200B20402 /* PSSD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PSSD.h; sourceTree = "<group>"; };
 		90A9609718775DB4000330FD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		90A9609818775DB4000330FD /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		90A9609B18775DB4000330FD /* cmd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
@@ -52,6 +53,7 @@
 				90D602F51896A4A300FFF4BA /* mm1acc */,
 				90EA24F21840F394002BE167 /* USITWI */,
 				900B9D44183E865000D54F1C /* PSSD.c */,
+				9087266B193CC63200B20402 /* PSSD.h */,
 				90A9609618775DB4000330FD /* usitwir */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
 				9067E1CB184BCD20003B5F37 /* mm1sw.c */,

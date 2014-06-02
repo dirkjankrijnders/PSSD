@@ -10,6 +10,10 @@
 #include "lib/keypad.h"
 #include "lib/i2cmaster.h"
 
+#include "../firmware/PSSD.h"
+
+#define addPSSD  0x08
+
 int main(void)
 {
 	/* insert your hardware initialization here */
@@ -18,7 +22,10 @@ int main(void)
 	
 	keypad_init();
 	
+	i2c_init();
+	
 	char key = '\0';
+	unsigned char ret;
 	uint8_t col = 1;
     for(;;){
         /* insert your main loop code here */
@@ -31,6 +38,26 @@ int main(void)
 		if (col == 5) {
 			lcd_goto(0,0);
 			col = 1;
+		}
+		if (i2c_start(addPSSD+I2C_WRITE)) {
+		
+			i2c_write(0x01);
+			i2c_rep_start(addPSSD+I2C_READ);       // set device address and read mode
+		
+			ret = i2c_readNak();                    // read one byte from EEPROM
+			i2c_stop();
+			lcd_goto(1,0);
+			switch (ret) {
+				case PSSD:
+					lcd_puts("PSSD");
+					break;
+				case CSMD:
+					lcd_puts("C Rail Servo mount");
+					break;
+					
+				default:
+					break;
+			}
 		}
     }
     return 0;   /* never reached */

@@ -11,6 +11,8 @@
 //#include "mm_module.h"
 #include "mm1acc/mm1acc.h"
 
+#include "PSSD.h"
+
 #if defined( __AVR_ATtiny2313__ )
 #define t2313
 #define OCA OCR1A
@@ -32,10 +34,6 @@ defined( __AVR_ATtiny84__ )
 #define BOARD PSSD
 #endif
 
-#define PSSD 0x02
-#define CSMD 0x03
-
-
 #ifndef ADD_A
 #define ADD_A 0xB0
 #endif
@@ -52,33 +50,6 @@ defined( __AVR_ATtiny84__ )
 #define PORT_B 2
 #endif
 
-#define TYPE_REG 0x01
-#define HW_VERSION_REG 0x02
-#define FW_VERSION_REG 0x03
-#define NAME_REG 0x04
-
-#define ADD_A_REG 0x10
-#define ADD_B_REG 0x20
-
-#define SHORT_A_REG_L 0x11
-#define SHORT_A_REG_H 0x12
-#define LONG_A_REG_L 0x13
-#define LONG_A_REG_H 0x14
-
-#define SHORT_B_REG_L 0x21
-#define SHORT_B_REG_H 0x22
-#define LONG_B_REG_L 0x23
-#define LONG_B_REG_H 0x24
-
-#define LAST_A_REG_L 0x31
-#define LAST_A_REG_H 0x32
-#define LAST_B_REG_L 0x41
-#define LAST_B_REG_H 0x42
-
-#define POSITION_A_REG 0xE0
-#define POSITION_B_REG 0xF0
-
-#define NULL_REGISTER 0xFF
 
 uint8_t usitwi_address = 0x10;
 uint8_t currentRegister = NULL_REGISTER;
