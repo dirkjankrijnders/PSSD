@@ -66,6 +66,25 @@ char keypad_read_key(uint8_t col) {
 		default:
 			break;
 	}
-
-	return (~key & 0x0F); // Only lower 4 bits
+	key = (~key & 0x0F); // Only lower 4 bits
+	switch (key) {
+		case 1:
+			key = 0;
+			break;
+		case 2:
+			key = 1;
+			break;
+		case 4:
+			key = 2;
+			break;
+		case 8:
+			key = 3;
+			break;
+		default:
+			break;
+	}
+	if (key)
+		key &0x10;
+	key = key & ((col - 1) << 2);
+	return key;
 }
