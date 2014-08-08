@@ -20,7 +20,7 @@
 DEVICE     = atmega8
 CLOCK      = 8000000
 PROGRAMMER = #-c stk500v2 -P avrdoper
-OBJECTS    = main.o lib/lcd.o lib/keypad.o lib/i2cmaster.o
+OBJECTS    = main.o lib/lcd.o lib/keypad.o lib/twimaster.o #lib/i2cmaster.o
 FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
 
 # ATMega8 fuse bits used above (fuse bits for other devices are different!):
@@ -49,7 +49,7 @@ FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
 # Tune the lines below only if you know what you are doing:
 
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
-COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
+COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) -I.
 
 # symbolic targets:
 all:	main.hex
