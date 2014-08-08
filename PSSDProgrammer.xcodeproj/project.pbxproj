@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXFileReference section */
@@ -15,6 +15,9 @@
 		900DF4F5193B248D00BD60F0 /* i2cmaster.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = i2cmaster.S; path = lib/i2cmaster.S; sourceTree = "<group>"; };
 		901425D818EF30D200F5F19F /* lcd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcd.c; path = lib/lcd.c; sourceTree = "<group>"; };
 		901425D918EF30D200F5F19F /* lcd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcd.h; path = lib/lcd.h; sourceTree = "<group>"; };
+		902D2F98198D74050083859F /* PSSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSD.h; path = firmware/PSSD.h; sourceTree = SOURCE_ROOT; };
+		902D2F99198D741A0083859F /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PSSD.c; path = firmware/PSSD.c; sourceTree = SOURCE_ROOT; };
+		902D2F9B198D786D0083859F /* twimaster.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = twimaster.c; path = lib/twimaster.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -31,6 +34,7 @@
 				901425DA18EF357300F5F19F /* lib */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
 				4079525E0CEA38CC00E202DC /* main.c */,
+				902D2F9A198D74210083859F /* PSSD */,
 			);
 			path = Programmer;
 			sourceTree = "<group>";
@@ -40,12 +44,22 @@
 			children = (
 				900DF4F4193B248D00BD60F0 /* i2cmaster.h */,
 				900DF4F5193B248D00BD60F0 /* i2cmaster.S */,
+				902D2F9B198D786D0083859F /* twimaster.c */,
 				901425D818EF30D200F5F19F /* lcd.c */,
 				901425D918EF30D200F5F19F /* lcd.h */,
 				900DF4F2193A51FA00BD60F0 /* keypad.c */,
 				900DF4F3193A520800BD60F0 /* keypad.h */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		902D2F9A198D74210083859F /* PSSD */ = {
+			isa = PBXGroup;
+			children = (
+				902D2F98198D74050083859F /* PSSD.h */,
+				902D2F99198D741A0083859F /* PSSD.c */,
+			);
+			name = PSSD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +85,10 @@
 		4079523D0CEA382200E202DC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = 4079523E0CEA382200E202DC /* Build configuration list for PBXProject "PSSDProgrammer" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
