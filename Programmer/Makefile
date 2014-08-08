@@ -19,7 +19,7 @@
 
 DEVICE     = atmega8
 CLOCK      = 8000000
-PROGRAMMER = #-c stk500v2 -P avrdoper
+PROGRAMMER = -c usbasp
 OBJECTS    = main.o lib/lcd.o lib/keypad.o lib/twimaster.o #lib/i2cmaster.o
 FUSES      = -U hfuse:w:0xd9:m -U lfuse:w:0x24:m
 
