@@ -14,11 +14,13 @@
 #define PORT_COL2 PORTD
 #define PORT_COL3 PORTD
 #define PORT_COL4 PORTB
+#define PORT_ROWS PORTD // Pin 1-4 on P2
+
 #define DDR_COL1 DDRB
 #define DDR_COL2 DDRD
 #define DDR_COL3 DDRD
 #define DDR_COL4 DDRB
-#define PORT_ROWS PORTD
+#define DDR_ROWS DDRD
 
 #define PIN_COL1 PB0
 #define PIN_COL2 PD7
@@ -69,22 +71,20 @@ char keypad_read_key(uint8_t col) {
 	key = (~key & 0x0F); // Only lower 4 bits
 	switch (key) {
 		case 1:
-			key = 0;
-			break;
-		case 2:
 			key = 1;
 			break;
-		case 4:
+		case 2:
 			key = 2;
 			break;
-		case 8:
+		case 4:
 			key = 3;
 			break;
+		case 8:
+			key = 4;
+			break;
 		default:
+			key = 0;
 			break;
 	}
-	if (key)
-		key &0x10;
-	key = key & ((col - 1) << 2);
 	return key;
 }
