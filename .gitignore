@@ -34,3 +34,5 @@ PSSDProgrammer.xcodeproj/xcuserdata/dirkjan.xcuserdatad/xcschemes/xcschememanage
 PSSD-i2c.xcodeproj/project.xcworkspace/xcuserdata/dirkjan.xcuserdatad/UserInterfaceState.xcuserstate
 
 *.xcsettings
+
+*.tikz
