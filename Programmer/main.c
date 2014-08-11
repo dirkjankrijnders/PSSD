@@ -134,28 +134,6 @@ void save() {
 	}
 }
 
-/*void show_settings(uint8_t line, info_t i, uint8_t sel) {
- char buf[5];
- lcd_goto(0, line);
- if (sel) {
- lcd_putch('>');
- } else {
- lcd_putch(' ');
- }
- itoa(i.address, buf, 10);
- lcd_puts(buf);
- itoa(i.shorts, buf, 10);
- lcd_puts(buf);
- itoa(i.longs, buf, 10);
- lcd_puts(buf);
- if (i.position) {
- lcd_putch('/');
- } else {
- lcd_putch('|');
- }
- }
- */
-
 
 void show_settings(uint8_t line, info_t i) {
 	char buf[16];
