@@ -49,6 +49,26 @@ info_t info[2];
 uint16_t val;
 uint8_t sel[] = {0, 5, 10};
 
+uint16_t get_val() {
+	switch (state) {
+		case SETADDA:
+			return info[0].address;
+		case SETADDB:
+			return info[1].address;
+		case SETSHORTA:
+			return info[0].shorts;
+		case SETSHORTB:
+			return info[1].shorts;
+		case SETLONGA:
+			return info[0].longs;
+		case SETLONGB:
+			return info[1].longs;
+		default:
+			break;
+	}
+	return 0;
+}
+
 uint8_t read_i2c_reg(uint8_t add, uint8_t reg) {
 	unsigned char ret;
 	PORT_I2C |= (1 << P_I2C);
@@ -262,6 +282,7 @@ int main(void)
 								lcd_putch(' ');
 								state++;
 								if (state > SETLONGB) state = SETADDA;
+								val = get_val();
 								goto_sel(0);
 								lcd_putch('>');
 								val = 0;
