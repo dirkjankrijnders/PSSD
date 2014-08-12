@@ -70,7 +70,7 @@ uint16_t get_val() {
 }
 
 uint8_t read_i2c_reg(uint8_t add, uint8_t reg) {
-	unsigned char ret;
+	uint8_t ret;
 	PORT_I2C |= (1 << P_I2C);
 	_delay_us(10);
 	i2c_start_wait(add+I2C_WRITE);
