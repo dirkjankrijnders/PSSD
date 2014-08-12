@@ -164,7 +164,7 @@ void show_settings(uint8_t line, info_t i) {
 	char buf[16];
 	char p = (i.position ? '/' : '|');
 	lcd_goto(1, line);
-	sprintf(buf, "%4u %4u %4u %c", i.address, i.shorts, i.longs, p);
+	sprintf(buf, "%4u %4u %4u%c", i.address, i.shorts, i.longs, p);
 	lcd_puts(buf);
 }
 
@@ -232,6 +232,7 @@ int main(void)
 				show_settings(0, info[0]);
 				show_settings(1, info[1]);
 				state++;
+				val = get_val();
 				lcd_goto(0,0);
 				lcd_putch('>');
 				break;
@@ -276,11 +277,13 @@ int main(void)
 								val -= 10;
 								update_field();
 								save();
+								digit = 0;
 								break;
 							case 12:
 								val += 10;
 								update_field();
 								save();
+								digit = 0;
 								break;
 							case 13:
 								goto_sel(0);
@@ -291,7 +294,6 @@ int main(void)
 								digit = 0;
 								goto_sel(0);
 								lcd_putch('>');
-								val = 0;
 								break;
 							case 14:
 								save();
@@ -310,6 +312,7 @@ int main(void)
 								write_i2c_reg(addPSSD, POSITION_B_REG, info[1].position);
 								show_settings(0, info[0]);
 								show_settings(1, info[1]);
+								break;
 							case 16:
 								state = SCAN;
 							default:
