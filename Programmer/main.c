@@ -224,11 +224,11 @@ int main(void)
 				info[0].address = read_i2c_reg(addPSSD, ADD_A_REG);
 				info[0].longs = read_i2c_reg16(addPSSD, LONG_A_REG_L);
 				info[0].shorts = read_i2c_reg16(addPSSD, SHORT_A_REG_L);
-				info[0].position = read_i2c_reg(addPSSD, POSITION_A_REG);
+				info[0].position = 1;//read_i2c_reg(addPSSD, POSITION_A_REG);
 				info[1].address = read_i2c_reg(addPSSD, ADD_B_REG);
 				info[1].longs = read_i2c_reg16(addPSSD, LONG_B_REG_L);
 				info[1].shorts = read_i2c_reg16(addPSSD, SHORT_B_REG_L);
-				info[1].position = read_i2c_reg(addPSSD, POSITION_B_REG);
+				info[1].position = 1;//read_i2c_reg(addPSSD, POSITION_B_REG);
 				show_settings(0, info[0]);
 				show_settings(1, info[1]);
 				state++;
