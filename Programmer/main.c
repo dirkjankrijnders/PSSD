@@ -42,7 +42,7 @@ typedef struct {
 
 #define addPSSD  0x20
 
-char prog[] = {'-','/','|','\\'};
+//char prog[] = {'-','/','|','\\'};
 uint8_t icbuf[2];
 info_t info[2];
 //uint8_t digit;
@@ -148,7 +148,7 @@ int main(void)
 	DDR_I2C |= (1 << P_I2C);
 	/* insert your hardware initialization here */
 	lcd_init();//(LCD_DISP_ON_CURSOR_BLINK);
-	lcd_puts("Hello world\0");
+	//lcd_puts("Hello world\0");
 	
 	keypad_init();
 	
@@ -268,7 +268,6 @@ int main(void)
 								break;
 							case 14:
 								save();
-//								state = GETINFO;
 							case 15:
 								if (info[0].position == 0) {
 									info[0].position =1;
