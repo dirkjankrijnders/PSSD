@@ -45,7 +45,7 @@ typedef struct {
 //char prog[] = {'-','/','|','\\'};
 uint8_t icbuf[2];
 info_t info[2];
-//uint8_t digit;
+uint8_t digit;
 uint16_t val;
 uint8_t sel[] = {0, 5, 10};
 
@@ -119,6 +119,11 @@ void update_field() {
 }
 
 void proces_digit(uint8_t value) {
+	if (digit == 0) {
+		val = 0;
+		digit = 1;
+	};
+	
 	val = val*10 + value;
 	update_field();
 }
@@ -283,6 +288,7 @@ int main(void)
 								state++;
 								if (state > SETLONGB) state = SETADDA;
 								val = get_val();
+								digit = 0;
 								goto_sel(0);
 								lcd_putch('>');
 								val = 0;
