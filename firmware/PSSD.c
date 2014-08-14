@@ -88,6 +88,7 @@ ISR(PCINT0_vect) {
 		
 		TCCR1B = 0; // Stop servo PWM
 		usitwi_init(); // Enable the I2C interface
+		PORTA &= ~(1 << PA7);
 	} else { // Falling flank, programmer detached!
 		usitwi_deinit();
 		loop = 0;
