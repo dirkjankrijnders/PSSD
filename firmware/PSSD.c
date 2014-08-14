@@ -117,11 +117,6 @@ void setup_servo_pwm() {
 	TCCR1 |= (1<<PWM1A)|(1<<COM1A1)|(0<<COM1A0); // Set on $00, clear on match
 	GTCCR |= (1<<PWM1B)|(1<<COM1B1)|(0<<COM1B0); // Set on $00, clear on match
 	
-	
-	OCR1A = 0x1F; //eeprom_read_word(&eLastA);
-	OCR1B = 0x2F; //eeprom_read_word(&eLastB);
-	OCR1C = 0xFF;
-	
 	DDRB |= (1 << PB1) | (1 << PB4);
     usitwi_init();
 	
@@ -131,10 +126,7 @@ void setup_servo_pwm() {
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
 	
-	
-	OCR1A = 0x1F; //eeprom_read_word(&eLastA);
-	OCR1B = 0x2F; //eeprom_read_word(&eLastB);
-	
+		
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
 	DDRA |= (1 << PA7); // Enable GND Fet as output
 	
