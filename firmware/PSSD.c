@@ -78,11 +78,10 @@ uint16_t volatile shortB = 0;
 uint16_t volatile longB  = 0;
 
 uint8_t volatile loop = 1;
-//uint8_t currentByte = 0;
 
 void setup_servo_pwm();
 
-#ifdef t24 //
+#ifdef t24
 ISR(PCINT0_vect) {
 	if (PINA & (1 << PA3)) { // Rising flank, programmer attached!
 		
@@ -108,10 +107,10 @@ void setup_servo_pwm() {
 	DDRB|=(1<<PB4)|(1<<PB3); //PWM Pins as Out(1<<PD3)|
 	
 	DDRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
-	//PORTD = 0b00111010;
+
 	PORTD |= (1<<PD0) | (1<<PD6);
-	//PORTB = PORTB^ (1<<PB3);*/
-    usitwi_init();
+	
+	usitwi_init();
 #endif
 #ifdef t25 // Won't work because the resolution is too low
 	TCCR1 |= (1<<CS12)|(1<<CS11)|(1<<CS10); // Prescaler to /1024 => f_TCK1 =~ 8kHz (7812.5 Hz)
@@ -135,7 +134,6 @@ void setup_servo_pwm() {
 	
 	OCR1A = 0x1F; //eeprom_read_word(&eLastA);
 	OCR1B = 0x2F; //eeprom_read_word(&eLastB);
-	//	OCR1C = 0xFF;
 	
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
 	DDRA |= (1 << PA7); // Enable GND Fet as output
@@ -151,17 +149,13 @@ void setup_servo_pwm() {
 int main()  __attribute__ ((noreturn));
 
 int main() {
-    /* Declare variables for addres and data */
-//    uint8_t                                 MM_Address;
-//    uint8_t                                 MM_Data;
 	acc_data data;
 	
     /* Initialize the MM module */
-    //MM_Module_Init();
 	mm1acc_init();
 	
 	setup_servo_pwm();
-	//usitwi_init();
+
 	sei();
 	for (;;) {
 		loop = 1;
@@ -205,20 +199,17 @@ int main() {
 				}
 			}
 		} // While
-		// PIND |= (1<<PD6);
 	}
 }
 
 void usitwi_onStart(uint8_t read) {
 	if (!read) {
 		currentRegister = NULL_REGISTER;
-		//		currentByte = 0;
 	}
 }
 
 void usitwi_onStop() {
 	currentRegister = NULL_REGISTER;
-	//	currentByte = 0;
 }
 
 uint8_t usitwi_onRead() {
@@ -286,11 +277,9 @@ void usitwi_onWrite(uint8_t value) {
 	} else {
 		switch(currentRegister) {
 			case ADD_A_REG:
-				//AddA = value;
 				eeprom_write_byte(&eAddA, value);
 				break;
 			case ADD_B_REG:
-				//AddB = value;
 				eeprom_write_byte(&eAddB, value);
 				break;
 			case SHORT_A_REG_L:
@@ -300,7 +289,6 @@ void usitwi_onWrite(uint8_t value) {
 				shortA = temp + (value << 8);
 				eeprom_write_word(&eShortA, shortA);
 				eeprom_write_word(&eLastA, shortA);
-				//OCR1A = shortA;
 				break;
 			case SHORT_B_REG_L:
 				temp = value;
@@ -328,19 +316,15 @@ void usitwi_onWrite(uint8_t value) {
 				break;
 			case POSITION_A_REG:
 				if (value == 0x00) {
-//					eeprom_write_word(&eLastA, A);
 					eeprom_write_word(&eLastA, shortA);
 				} else if (value == 0x01) {
-//					eeprom_write_word(&eLastA, longA);
 					eeprom_write_word(&eLastA, longA);
 				}
 				break;
 			case POSITION_B_REG:
 				if (value == 0x00) {
-//					OCR1B = shortB;
 					eeprom_write_word(&eLastB, shortB);
 				} else if (value == 0x01) {
-//					OCR1B = longB;
 					eeprom_write_word(&eLastB, longB);
 				}
 				break;
@@ -350,6 +334,5 @@ void usitwi_onWrite(uint8_t value) {
 		}
 		loop = 0;
 		currentRegister++;
-//
 	}
 }
