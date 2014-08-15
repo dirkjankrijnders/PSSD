@@ -273,6 +273,10 @@ uint8_t usitwi_onRead() {
 			return (eeprom_read_word(&eLastB)) & 0xFF;
 		case LAST_B_REG_H:
 			return (eeprom_read_word(&eLastB) >> 8) & 0xFF;
+		case SPEED_A_REG:
+			return speedA;
+		case SPEED_B_REG:
+			return speedB;
 		case POSITION_A_REG:
 			if (OCR1A == shortA)
 				return 0x00;
@@ -350,7 +354,12 @@ void usitwi_onWrite(uint8_t value) {
 					eeprom_write_word(&eLastB, longB);
 				}
 				break;
-				
+			case SPEED_A_REG:
+				eeprom_write_byte(&eSpeedA, value);
+				break;
+			case SPEED_B_REG:
+				eeprom_write_byte(&eSpeedB, value);
+				break;
 			default:
 				break;
 		}
