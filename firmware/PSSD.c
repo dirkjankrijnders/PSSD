@@ -138,7 +138,7 @@ void setup_servo_pwm() {
 #ifdef t24 //
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
-	ICR1 = 25000;
+	ICR1 = 15000;
 	
 	
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
@@ -216,14 +216,12 @@ int main() {
 					currentA = currentA + 2; //speedA;
 					if (currentA >= targetA) {
 						currentA = targetA;
-						PORT_FET &= ~(1 << P_FET);
 					}
 					OCR1A = currentA;
 				} else if (currentA > targetA) {
 					currentA = currentA - 2; //speedA;
 					if (currentA <= targetA) {
 						currentA = targetA;
-						PORT_FET &= ~(1 << P_FET);
 					}
 					OCR1A = currentA;
 				}
@@ -231,18 +229,17 @@ int main() {
 					currentB = currentB + 2;//speedB;
 					if (currentB >= targetB) {
 						currentB = targetB;
-						PORT_FET &= ~(1 << P_FET);
 					}
 					OCR1B = currentB;
 				} else if (currentB > targetB) {
 					currentB = currentB - 2; //speedA;
 					if (currentB <= targetB) {
 						currentB = targetB;
-						PORT_FET &= ~(1 << P_FET);
 					}
 					OCR1B = currentB;
 				}
-			_delay_ms(23);
+			if (currentA == targetA && currentB == targetB) PORT_FET &= ~(1 << P_FET);
+			_delay_ms(13);
 				
 			
 		} // While
