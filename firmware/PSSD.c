@@ -63,6 +63,8 @@ uint8_t  EEMEM eAddA = ADD_A ;
 uint8_t  EEMEM eAddB = ADD_B ;
 uint8_t  EEMEM ePortA = PORT_A ;
 uint8_t  EEMEM ePortB = PORT_B ;
+uint8_t	 EEMEM eSpeedA = 2;
+uint8_t	 EEMEM eSpeedB = 2;
 
 uint16_t EEMEM eLastA = 1250;
 uint16_t EEMEM eLastB = 1250;
@@ -76,6 +78,8 @@ uint8_t volatile AddB    = 0;
 uint8_t volatile PortB   = 0;
 uint16_t volatile shortB = 0;
 uint16_t volatile longB  = 0;
+uint8_t volatile speedA  = 2;
+uint8_t	volatile speedB	 = 2;
 
 uint8_t volatile loop = 1;
 uint16_t targetA;
@@ -167,6 +171,8 @@ int main() {
 		shortB = eeprom_read_word(&eShortB);
 		longB = eeprom_read_word(&eLongB);
 
+		speedA = eeprom_read_byte(&eSpeedA);
+		speedB = eeprom_read_byte(&eSpeedB);
 		OCR1A = eeprom_read_word(&eLastA);
 		OCR1B = eeprom_read_word(&eLastB);
 		
@@ -200,14 +206,14 @@ int main() {
 					}
 				}
 				if (OCR1A < targetA) {
-					OCR1A += 2;
+					OCR1A += speedA;
 					if (OCR1A >= targetA) {
 						OCR1A = targetA;
 						PORT_FET &= ~(1 << P_FET);
 					}
 				}
 				if (OCR1B < targetB) {
-					OCR1B += 2;
+					OCR1B += speedB;
 					if (OCR1B >= targetB) {
 						OCR1B = targetB;
 						PORT_FET &= ~(1 << P_FET);
