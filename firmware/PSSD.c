@@ -121,7 +121,7 @@ void setup_servo_pwm() {
 	DDRB|=(1<<PB4)|(1<<PB3); //PWM Pins as Out(1<<PD3)|
 	
 	DDRD|=(1<<PD0)|(1<<PD6); // GND Fet connection & LED
-
+	
 	PORTD |= (1<<PD0) | (1<<PD6);
 	
 	usitwi_init();
@@ -140,11 +140,11 @@ void setup_servo_pwm() {
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
 	
-		
+	
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
 	DDRA |= (1 << P_FET); // Enable GND Fet as output
 	
-//	PORT_FET |= (1 << P_FET);
+	//	PORT_FET |= (1 << P_FET);
 	
 	// I2C Programmer attachment:
 	PCMSK0 |= (1 << PCINT3);
@@ -161,9 +161,9 @@ int main() {
 	mm1acc_init();
 	
 	setup_servo_pwm();
-
+	
 	PORT_FET &= ~(1 << P_FET);
-
+	
 	sei();
 	for (;;) {
 		loop = 1;
@@ -176,13 +176,13 @@ int main() {
 		PortB = eeprom_read_byte(&ePortB);
 		shortB = eeprom_read_word(&eShortB);
 		longB = eeprom_read_word(&eLongB);
-
+		
 		speedA = eeprom_read_byte(&eSpeedA);
 		speedB = eeprom_read_byte(&eSpeedB);
 		targetA = eeprom_read_word(&eLastA);
 		targetB = eeprom_read_word(&eLastB);
 		
-
+		
 		for(;loop == 1;) {
 			if (mm1acc_check(&data)) {
 				// New data
@@ -211,6 +211,7 @@ int main() {
 						}
 					}
 				}
+			}
 				if (currentA < targetA) {
 					currentA = currentA + 2; //speedA;
 					if (currentA >= targetA) {
@@ -241,8 +242,9 @@ int main() {
 					}
 					OCR1B = currentB;
 				}
-
-			}
+			_delay_ms(23);
+				
+			
 		} // While
 	}
 }
