@@ -78,6 +78,8 @@ uint16_t volatile shortB = 0;
 uint16_t volatile longB  = 0;
 
 uint8_t volatile loop = 1;
+uint16_t targetA;
+uint16_t targetB;
 
 void setup_servo_pwm();
 
@@ -86,8 +88,8 @@ ISR(PCINT0_vect) {
 	if (PINA & (1 << PA3)) { // Rising flank, programmer attached!
 		
 		TCCR1B = 0; // Stop servo PWM
+		PORTA &= ~(1 << P_FET);
 		usitwi_init(); // Enable the I2C interface
-		PORTA &= ~(1 << PA7);
 	} else { // Falling flank, programmer detached!
 		usitwi_deinit();
 		loop = 0;
@@ -98,6 +100,8 @@ ISR(PCINT0_vect) {
 
 void setup_servo_pwm() {
 #ifdef t2313
+#define PORT_FET PORTD
+#define P_FET PD0
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
@@ -122,15 +126,17 @@ void setup_servo_pwm() {
 	
 #endif
 #ifdef t24 //
+#define PORT_FET PORTA
+#difine P_FET PA7
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
 	
 		
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
-	DDRA |= (1 << PA7); // Enable GND Fet as output
+	DDRA |= (1 << P_FET); // Enable GND Fet as output
 	
-	PORTA |= (1 << PA7);
+	PORT_FET |= (1 << P_FET);
 	
 	// I2C Programmer attachment:
 	PCMSK0 |= (1 << PCINT3);
@@ -171,22 +177,40 @@ int main() {
 				if (data.address == AddA) {
 					if (data.function == 1) {
 						if (data.port == PortA) {
-							OCR1A = shortA;
+							targetA = shortA;
+							PORT_FET |= (1 << P_FET);
 							eeprom_write_word(&eLastA, OCR1A);
 						} else if (data.port == PortA + 1) {
-							OCR1A = longA;
+							targetA = longA;
+							PORT_FET |= (1 << P_FET);
 							eeprom_write_word(&eLastA, OCR1A);
 						}
 					} else if (data.address == AddB) {
 						if (data.function == 1) {
 							if (data.port == PortB) {
-								OCR1B = shortB;
+								targetB = shortB;
+								PORT_FET |= (1 << P_FET);
 								eeprom_write_word(&eLastB, OCR1B);
 							} else if (data.port == PortB + 1) {
-								OCR1B = longB;
+								targetB = longB;
+								PORT_FET |= (1 << P_FET);
 								eeprom_write_word(&eLastB, OCR1B);
 							}
 						}
+					}
+				}
+				if (OCR1A < targetA) {
+					OCR1A += 2;
+					if (OCR1A >= targetA) {
+						OCR1A = targetA;
+						PORT_FET &= ~(1 << P_FET);
+					}
+				}
+				if (OCR1B < targetB) {
+					OCR1B += 2;
+					if (OCR1B >= targetB) {
+						OCR1B = targetB;
+						PORT_FET &= ~(1 << P_FET);
 					}
 				}
 			}
