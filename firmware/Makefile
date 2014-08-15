@@ -31,7 +31,7 @@ else
 endif
 
 # @echo "Board: $(BOARD)"
-PROGRAMMER = -c dragon_isp -P usb 
+PROGRAMMER = -c usbasp
 OBJECTS    = PSSD.o usitwir/src/slave.o mm1acc/mm1acc.o
 
 INCLUDE    = -Imm1acc

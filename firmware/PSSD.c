@@ -16,6 +16,8 @@
 #if defined( __AVR_ATtiny2313__ )
 #define t2313
 #define OCA OCR1A
+#define PORT_FET PORTD
+#define P_FET PD0
 #endif
 
 #if defined( __AVR_ATtiny25__ ) | \
@@ -28,6 +30,8 @@ defined( __AVR_ATtiny85__ )
 defined( __AVR_ATtiny44__ ) | \
 defined( __AVR_ATtiny84__ )
 #define t24
+#define PORT_FET PORTA
+#define P_FET PA7
 #endif
 
 #ifndef BOARD
@@ -85,6 +89,10 @@ uint8_t volatile loop = 1;
 uint16_t targetA;
 uint16_t targetB;
 
+uint16_t currentA = 1000;
+uint16_t currentB = 1000;
+
+
 void setup_servo_pwm();
 
 #ifdef t24
@@ -104,8 +112,6 @@ ISR(PCINT0_vect) {
 
 void setup_servo_pwm() {
 #ifdef t2313
-#define PORT_FET PORTD
-#define P_FET PD0
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
@@ -130,8 +136,6 @@ void setup_servo_pwm() {
 	
 #endif
 #ifdef t24 //
-#define PORT_FET PORTA
-#difine P_FET PA7
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
 	ICR1 = 25000;
@@ -140,7 +144,7 @@ void setup_servo_pwm() {
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
 	DDRA |= (1 << P_FET); // Enable GND Fet as output
 	
-	PORT_FET |= (1 << P_FET);
+//	PORT_FET |= (1 << P_FET);
 	
 	// I2C Programmer attachment:
 	PCMSK0 |= (1 << PCINT3);
@@ -158,6 +162,8 @@ int main() {
 	
 	setup_servo_pwm();
 
+	PORT_FET &= ~(1 << P_FET);
+
 	sei();
 	for (;;) {
 		loop = 1;
@@ -173,8 +179,8 @@ int main() {
 
 		speedA = eeprom_read_byte(&eSpeedA);
 		speedB = eeprom_read_byte(&eSpeedB);
-		OCR1A = eeprom_read_word(&eLastA);
-		OCR1B = eeprom_read_word(&eLastB);
+		targetA = eeprom_read_word(&eLastA);
+		targetB = eeprom_read_word(&eLastB);
 		
 
 		for(;loop == 1;) {
@@ -185,40 +191,57 @@ int main() {
 						if (data.port == PortA) {
 							targetA = shortA;
 							PORT_FET |= (1 << P_FET);
-							eeprom_write_word(&eLastA, OCR1A);
+							eeprom_write_word(&eLastA, shortA);
 						} else if (data.port == PortA + 1) {
 							targetA = longA;
 							PORT_FET |= (1 << P_FET);
-							eeprom_write_word(&eLastA, OCR1A);
+							eeprom_write_word(&eLastA, longA);
 						}
 					} else if (data.address == AddB) {
 						if (data.function == 1) {
 							if (data.port == PortB) {
 								targetB = shortB;
 								PORT_FET |= (1 << P_FET);
-								eeprom_write_word(&eLastB, OCR1B);
+								eeprom_write_word(&eLastB, shortB);
 							} else if (data.port == PortB + 1) {
 								targetB = longB;
 								PORT_FET |= (1 << P_FET);
-								eeprom_write_word(&eLastB, OCR1B);
+								eeprom_write_word(&eLastB, longB);
 							}
 						}
 					}
 				}
-				if (OCR1A < targetA) {
-					OCR1A += speedA;
-					if (OCR1A >= targetA) {
-						OCR1A = targetA;
+				if (currentA < targetA) {
+					currentA = currentA + 2; //speedA;
+					if (currentA >= targetA) {
+						currentA = targetA;
 						PORT_FET &= ~(1 << P_FET);
 					}
-				}
-				if (OCR1B < targetB) {
-					OCR1B += speedB;
-					if (OCR1B >= targetB) {
-						OCR1B = targetB;
+					OCR1A = currentA;
+				} else if (currentA > targetA) {
+					currentA = currentA - 2; //speedA;
+					if (currentA <= targetA) {
+						currentA = targetA;
 						PORT_FET &= ~(1 << P_FET);
 					}
+					OCR1A = currentA;
 				}
+				if (currentB < targetB) {
+					currentB = currentB + 2;//speedB;
+					if (currentB >= targetB) {
+						currentB = targetB;
+						PORT_FET &= ~(1 << P_FET);
+					}
+					OCR1B = currentB;
+				} else if (currentB > targetB) {
+					currentB = currentB - 2; //speedA;
+					if (currentB <= targetB) {
+						currentB = targetB;
+						PORT_FET &= ~(1 << P_FET);
+					}
+					OCR1B = currentB;
+				}
+
 			}
 		} // While
 	}
@@ -315,6 +338,7 @@ void usitwi_onWrite(uint8_t value) {
 				shortA = temp + (value << 8);
 				eeprom_write_word(&eShortA, shortA);
 				eeprom_write_word(&eLastA, shortA);
+				PORT_FET |= (1 << P_FET);
 				break;
 			case SHORT_B_REG_L:
 				temp = value;
@@ -323,6 +347,7 @@ void usitwi_onWrite(uint8_t value) {
 				shortB = temp + (value << 8);
 				eeprom_write_word(&eShortB, shortB);
 				eeprom_write_word(&eLastB, shortB);
+				PORT_FET |= (1 << P_FET);
 				break;
 			case LONG_A_REG_L:
 				temp = value;
@@ -331,6 +356,7 @@ void usitwi_onWrite(uint8_t value) {
 				longA = temp + (value << 8);
 				eeprom_write_word(&eLongA, longA);
 				eeprom_write_word(&eLastA, longA);
+				PORT_FET |= (1 << P_FET);
 				break;
 			case LONG_B_REG_L:
 				temp = value;
@@ -339,6 +365,7 @@ void usitwi_onWrite(uint8_t value) {
 				longB = temp + (value << 8);
 				eeprom_write_word(&eLongB, longB);
 				eeprom_write_word(&eLastB, longB);
+				PORT_FET |= (1 << P_FET);
 				break;
 			case POSITION_A_REG:
 				if (value == 0x00) {
@@ -346,6 +373,7 @@ void usitwi_onWrite(uint8_t value) {
 				} else if (value == 0x01) {
 					eeprom_write_word(&eLastA, longA);
 				}
+				PORT_FET |= (1 << P_FET);
 				break;
 			case POSITION_B_REG:
 				if (value == 0x00) {
@@ -353,6 +381,7 @@ void usitwi_onWrite(uint8_t value) {
 				} else if (value == 0x01) {
 					eeprom_write_word(&eLastB, longB);
 				}
+				PORT_FET |= (1 << P_FET);
 				break;
 			case SPEED_A_REG:
 				eeprom_write_byte(&eSpeedA, value);
