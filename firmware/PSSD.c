@@ -182,7 +182,8 @@ int main() {
 		targetA = eeprom_read_word(&eLastA);
 		targetB = eeprom_read_word(&eLastB);
 		
-		
+		PORT_FET |= (1 << P_FET);
+
 		for(;loop == 1;) {
 			if (mm1acc_check(&data)) {
 				// New data
@@ -337,7 +338,6 @@ void usitwi_onWrite(uint8_t value) {
 				shortA = temp + (value << 8);
 				eeprom_write_word(&eShortA, shortA);
 				eeprom_write_word(&eLastA, shortA);
-				PORT_FET |= (1 << P_FET);
 				break;
 			case SHORT_B_REG_L:
 				temp = value;
@@ -346,7 +346,6 @@ void usitwi_onWrite(uint8_t value) {
 				shortB = temp + (value << 8);
 				eeprom_write_word(&eShortB, shortB);
 				eeprom_write_word(&eLastB, shortB);
-				PORT_FET |= (1 << P_FET);
 				break;
 			case LONG_A_REG_L:
 				temp = value;
@@ -355,7 +354,6 @@ void usitwi_onWrite(uint8_t value) {
 				longA = temp + (value << 8);
 				eeprom_write_word(&eLongA, longA);
 				eeprom_write_word(&eLastA, longA);
-				PORT_FET |= (1 << P_FET);
 				break;
 			case LONG_B_REG_L:
 				temp = value;
@@ -372,7 +370,6 @@ void usitwi_onWrite(uint8_t value) {
 				} else if (value == 0x01) {
 					eeprom_write_word(&eLastA, longA);
 				}
-				PORT_FET |= (1 << P_FET);
 				break;
 			case POSITION_B_REG:
 				if (value == 0x00) {
@@ -380,7 +377,6 @@ void usitwi_onWrite(uint8_t value) {
 				} else if (value == 0x01) {
 					eeprom_write_word(&eLastB, longB);
 				}
-				PORT_FET |= (1 << P_FET);
 				break;
 			case SPEED_A_REG:
 				eeprom_write_byte(&eSpeedA, value);
