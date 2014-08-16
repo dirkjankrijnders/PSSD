@@ -82,8 +82,8 @@ uint8_t volatile AddB    = 0;
 uint8_t volatile PortB   = 0;
 uint16_t volatile shortB = 0;
 uint16_t volatile longB  = 0;
-uint8_t volatile speedA  = 2;
-uint8_t	volatile speedB	 = 2;
+uint8_t volatile speedA  = 1;
+uint8_t	volatile speedB	 = 1;
 
 uint8_t volatile loop = 1;
 uint16_t targetA;
@@ -91,7 +91,6 @@ uint16_t targetB;
 
 uint16_t currentA = 1000;
 uint16_t currentB = 1000;
-
 
 void setup_servo_pwm();
 
@@ -138,7 +137,7 @@ void setup_servo_pwm() {
 #ifdef t24 //
 	TCCR1A=(1<<COM1A1)|(1<<COM1B1)|(1<<WGM11);        // Inverted PWM
 	TCCR1B=(1<<CS11)|(1<<WGM12)|(1<<WGM13); // PRESCALER=/8 MODE 14(FAST PWM, TOP=ICR1)
-	ICR1 = 15000;
+	ICR1 = 20000; //20000 / 8000000 / 8 = 20 ms
 	
 	
 	DDRA |= (1 << PA5) | (1 << PA6); // Enable the servo pwm channels as output, should be PA5 en PA6
@@ -156,6 +155,8 @@ int main()  __attribute__ ((noreturn));
 
 int main() {
 	acc_data data;
+	
+	uint8_t FET_state = 1;
 	
     /* Initialize the MM module */
 	mm1acc_init();
@@ -182,8 +183,8 @@ int main() {
 		targetA = eeprom_read_word(&eLastA);
 		targetB = eeprom_read_word(&eLastB);
 		
-		PORT_FET |= (1 << P_FET);
-
+		FET_state = 1;
+		
 		for(;loop == 1;) {
 			if (mm1acc_check(&data)) {
 				// New data
@@ -191,57 +192,74 @@ int main() {
 					if (data.function == 1) {
 						if (data.port == PortA) {
 							targetA = shortA;
-							PORT_FET |= (1 << P_FET);
+							FET_state = 1;
 							eeprom_write_word(&eLastA, shortA);
 						} else if (data.port == PortA + 1) {
 							targetA = longA;
-							PORT_FET |= (1 << P_FET);
+							FET_state = 1;
 							eeprom_write_word(&eLastA, longA);
 						}
 					} else if (data.address == AddB) {
 						if (data.function == 1) {
 							if (data.port == PortB) {
 								targetB = shortB;
-								PORT_FET |= (1 << P_FET);
+								FET_state = 1;
 								eeprom_write_word(&eLastB, shortB);
 							} else if (data.port == PortB + 1) {
 								targetB = longB;
-								PORT_FET |= (1 << P_FET);
+								FET_state = 1;
 								eeprom_write_word(&eLastB, longB);
 							}
 						}
 					}
 				}
 			}
-				if (currentA < targetA) {
-					currentA = currentA + 2; //speedA;
-					if (currentA >= targetA) {
-						currentA = targetA;
-					}
-					OCR1A = currentA;
-				} else if (currentA > targetA) {
-					currentA = currentA - 2; //speedA;
-					if (currentA <= targetA) {
-						currentA = targetA;
-					}
-					OCR1A = currentA;
+			if (currentA < targetA) {
+				currentA = currentA + speedA;
+				if (currentA >= targetA) {
+					currentA = targetA;
 				}
-				if (currentB < targetB) {
-					currentB = currentB + 2;//speedB;
-					if (currentB >= targetB) {
-						currentB = targetB;
-					}
-					OCR1B = currentB;
-				} else if (currentB > targetB) {
-					currentB = currentB - 2; //speedA;
-					if (currentB <= targetB) {
-						currentB = targetB;
-					}
-					OCR1B = currentB;
+				OCR1A = currentA;
+			} else if (currentA > targetA) {
+				currentA = currentA - speedA;
+				if (currentA <= targetA) {
+					currentA = targetA;
 				}
-			if (currentA == targetA && currentB == targetB) PORT_FET &= ~(1 << P_FET);
-			_delay_ms(13);
-				
+				OCR1A = currentA;
+			}
+			if (currentB < targetB) {
+				currentB = currentB + speedB;
+				if (currentB >= targetB) {
+					currentB = targetB;
+				}
+				OCR1B = currentB;
+			} else if (currentB > targetB) {
+				currentB = currentB - speedB;
+				if (currentB <= targetB) {
+					currentB = targetB;
+				}
+				OCR1B = currentB;
+			}
+			
+			if (FET_state > 0) {
+				PORT_FET |= (1 << P_FET);
+			}
+			
+			if (FET_state > 9) {
+				FET_state++;
+			}
+			
+			if (FET_state > 50) {
+				FET_state = 0;
+			}
+			
+			if (FET_state == 0) {
+				PORT_FET &= ~(1 << P_FET);
+			}
+			
+			if (currentA == targetA && currentB == targetB && FET_state > 0 && FET_state < 10) FET_state = 10;
+			_delay_ms(1);
+			
 			
 		} // While
 	}
@@ -362,7 +380,6 @@ void usitwi_onWrite(uint8_t value) {
 				longB = temp + (value << 8);
 				eeprom_write_word(&eLongB, longB);
 				eeprom_write_word(&eLastB, longB);
-				PORT_FET |= (1 << P_FET);
 				break;
 			case POSITION_A_REG:
 				if (value == 0x00) {
