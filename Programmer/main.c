@@ -24,20 +24,26 @@ enum state_t {
 	SCAN = 0,
 	GETINFO,
 	SETADDA,
+	SETPORTA,
 	SETSHORTA,
 	SETLONGA,
+	SETSPEEDA,
 	SETADDB,
+	SETPORTB,
 	SETSHORTB,
 	SETLONGB,
+	SETSPEEDB,
 	SAVEPARAMA,
 	SAVEPARAMB
 } state;
 
 typedef struct {
 	uint8_t address;
+	uint8_t port;
 	uint16_t shorts;
 	uint16_t longs;
 	uint8_t position;
+	uint8_t	speed;
 }info_t ;
 
 #define addPSSD  0x20
@@ -55,6 +61,10 @@ uint16_t get_val() {
 			return info[0].address;
 		case SETADDB:
 			return info[1].address;
+		case SETPORTA:
+			return info[0].port;
+		case SETPORTB:
+			return info[1].port;
 		case SETSHORTA:
 			return info[0].shorts;
 		case SETSHORTB:
@@ -63,6 +73,10 @@ uint16_t get_val() {
 			return info[0].longs;
 		case SETLONGB:
 			return info[1].longs;
+		case SETSPEEDA:
+			return info[0].speed;
+		case SETSPEEDB:
+			return info[1].speed;
 		default:
 			break;
 	}
@@ -138,6 +152,22 @@ void save() {
 			write_i2c_reg(addPSSD, ADD_B_REG, val);
 			info[1].address = val;
 			break;
+		case SETPORTA:
+			write_i2c_reg(addPSSD, PORT_A_REG, val);
+			info[0].port = val;
+			break;
+		case SETPORTB:
+			write_i2c_reg(addPSSD, PORT_B_REG, val);
+			info[1].port = val;
+			break;
+		case SETSPEEDA:
+			write_i2c_reg(addPSSD, SPEED_A_REG, val);
+			info[0].speed = val;
+			break;
+		case SETSPEEDB:
+			write_i2c_reg(addPSSD, SPEED_B_REG, val);
+			info[1].speed = val;
+			break;
 		case SETSHORTA:
 			write_i2c_reg16(addPSSD, SHORT_A_REG_L, val);
 			info[0].shorts = val;
@@ -188,7 +218,12 @@ int main(void)
         /* insert your main loop code here */
 		switch (state) {
 			case SCAN:
-				PORT_I2C |= (1 << P_I2C);
+				board = 0;
+				do {
+					board = read_i2c_reg(addPSSD, FW_VERSION_REG);
+					_delay_us(10);
+				} while (board == 0);
+/*				PORT_I2C |= (1 << P_I2C);
 				lcd_goto(0,0);
 				lcd_puts("Scan I2C");
 				//				lcd_putch(prog[ret]);
@@ -200,7 +235,7 @@ int main(void)
 				
 				board = i2c_readNak();                    // read one byte from EEPROM
 				i2c_stop();
-				PORT_I2C &= ~(1 << P_I2C);
+				PORT_I2C &= ~(1 << P_I2C);*/
 				lcd_goto(0,1);
 				switch (board) {
 					case PSSD:
@@ -224,11 +259,11 @@ int main(void)
 				info[0].address = read_i2c_reg(addPSSD, ADD_A_REG);
 				info[0].longs = read_i2c_reg16(addPSSD, LONG_A_REG_L);
 				info[0].shorts = read_i2c_reg16(addPSSD, SHORT_A_REG_L);
-				info[0].position = 1;//read_i2c_reg(addPSSD, POSITION_A_REG);
+				info[0].position = read_i2c_reg(addPSSD, POSITION_A_REG);
 				info[1].address = read_i2c_reg(addPSSD, ADD_B_REG);
 				info[1].longs = read_i2c_reg16(addPSSD, LONG_B_REG_L);
 				info[1].shorts = read_i2c_reg16(addPSSD, SHORT_B_REG_L);
-				info[1].position = 1;//read_i2c_reg(addPSSD, POSITION_B_REG);
+				info[1].position = read_i2c_reg(addPSSD, POSITION_B_REG);
 				show_settings(0, info[0]);
 				show_settings(1, info[1]);
 				state++;
@@ -289,7 +324,7 @@ int main(void)
 								goto_sel(0);
 								lcd_putch(' ');
 								state++;
-								if (state > SETLONGB) state = SETADDA;
+								if (state > SETSPEEDB) state = SETADDA;
 								val = get_val();
 								digit = 0;
 								goto_sel(0);
