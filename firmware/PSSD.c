@@ -295,6 +295,10 @@ uint8_t usitwi_onRead() {
 			return eeprom_read_byte(&eAddA);
 		case ADD_B_REG:
 			return AddB;
+		case PORT_A_REG:
+			return eeprom_read_byte(&ePortA);
+		case PORT_B_REG:
+			return eeprom_read_byte(&ePortB);
 		case SHORT_A_REG_L:
 			return (eeprom_read_word(&eShortA)) & 0xFF;
 		case SHORT_A_REG_H:
@@ -355,6 +359,12 @@ void usitwi_onWrite(uint8_t value) {
 				break;
 			case ADD_B_REG:
 				eeprom_write_byte(&eAddB, value);
+				break;
+			case PORT_A_REG:
+				eeprom_write_byte(&ePortA, value);
+				break;
+			case PORT_B_REG:
+				eeprom_write_byte(&ePortB, value);
 				break;
 			case SHORT_A_REG_L:
 				temp = value;

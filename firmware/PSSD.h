@@ -25,12 +25,14 @@
 #define LONG_A_REG_L 0x13
 #define LONG_A_REG_H 0x14
 #define SPEED_A_REG 0x15
+#define PORT_A_REG 0x16
 
 #define SHORT_B_REG_L 0x21
 #define SHORT_B_REG_H 0x22
 #define LONG_B_REG_L 0x23
 #define LONG_B_REG_H 0x24
 #define SPEED_B_REG 0x25
+#define PORT_B_REG 0x26
 
 #define LAST_A_REG_L 0x31
 #define LAST_A_REG_H 0x32
