@@ -164,7 +164,7 @@ int main() {
 	setup_servo_pwm();
 	
 	PORT_FET &= ~(1 << P_FET);
-	
+	DDRA |= (1 << PA2); // Pad J1 as output
 	sei();
 	for (;;) {
 		loop = 1;
@@ -191,10 +191,12 @@ int main() {
 				if (data.address == AddA) {
 					if (data.function == 1) {
 						if (data.port == PortA) {
+							PORTA |= (1 < PA2);
 							targetA = shortA;
 							FET_state = 1;
 							eeprom_write_word(&eLastA, shortA);
 						} else if (data.port == PortA + 1) {
+							PORTA |= (1 < PA2);
 							targetA = longA;
 							FET_state = 1;
 							eeprom_write_word(&eLastA, longA);
@@ -264,7 +266,7 @@ int main() {
 			
 			if (currentA == targetA && currentB == targetB && FET_state > 0 && FET_state < 10) FET_state = 10;
 			_delay_ms(1);
-			
+			PORTA &= ~(1 < PA2);
 			
 		} // While
 	}
