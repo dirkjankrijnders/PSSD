@@ -201,19 +201,21 @@ int main() {
 							FET_state = 1;
 							eeprom_write_word(&eLastA, longA);
 						}
-					} else if (data.address == AddB) {
-						if (data.function == 1) {
-							if (data.port == PortB) {
-								targetB = shortB;
-								FET_state = 1;
-								eeprom_write_word(&eLastB, shortB);
-							} else if (data.port == PortB + 1) {
-								targetB = longB;
-								FET_state = 1;
-								eeprom_write_word(&eLastB, longB);
-							}
+					}
+				}
+				if (data.address == AddB) {
+					if (data.function == 1) {
+						if (data.port == PortB) {
+							targetB = shortB;
+							FET_state = 1;
+							eeprom_write_word(&eLastB, shortB);
+						} else if (data.port == PortB + 1) {
+							targetB = longB;
+							FET_state = 1;
+							eeprom_write_word(&eLastB, longB);
 						}
 					}
+					
 				}
 			}
 #ifdef t24
