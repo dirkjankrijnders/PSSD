@@ -7,6 +7,8 @@
 #include <util/delay.h>
 #include <avr/eeprom.h>
 #include <avr/interrupt.h>
+#include <avr/sleep.h>
+
 #include "usitwir/src/slave.h"
 //#include "mm_module.h"
 #include "mm1acc/mm1acc.h"
@@ -162,7 +164,15 @@ int main() {
 	mm1acc_init();
 	
 	setup_servo_pwm();
+	/* Disable some peripherals: */
+	ADCSRA |= (1<<ADEN); // Disable ADC
+	ACSR   |= (1<<ACD);  // Disable Analog comparator
 	
+	PRR |= (1 << PRUSI) | (1 << PRADC); // Shutdown the ADC and USI
+
+	DIDR0 |= 0b00000111;
+	
+	set_sleep_mode(0);
 	PORT_FET &= ~(1 << P_FET);
 	DDRA |= (1 << PA2); // Pad J1 as output
 	sei();
@@ -262,8 +272,11 @@ int main() {
 				FET_state = 0;
 			}
 			
-			if (FET_state == 0) {
+			if (FET_state == 0) { // Done switching, switch off FET, go back to sleep.
 				PORT_FET &= ~(1 << P_FET);
+				sleep_enable();
+				sleep_cpu();
+				sleep_disable();
 			}
 			
 			if (currentA == targetA && currentB == targetB && FET_state > 0 && FET_state < 10) FET_state = 10;
