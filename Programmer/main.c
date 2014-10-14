@@ -25,14 +25,14 @@ enum state_t {
 	SCAN = 0,
 	GETINFO,
 	SETADDA,
-	SETPORTA,
 	SETSHORTA,
 	SETLONGA,
+	SETPORTA,
 	SETSPEEDA,
 	SETADDB,
-	SETPORTB,
 	SETSHORTB,
 	SETLONGB,
+	SETPORTB,
 	SETSPEEDB,
 	SAVEPARAMA,
 	SAVEPARAMB
@@ -54,7 +54,9 @@ uint8_t icbuf[2];
 info_t info[2];
 uint8_t digit;
 uint16_t val;
-uint8_t sel[] = {0, 5, 10};
+uint8_t sel[] = {0, 5, 10, 0, 5, 10};
+uint8_t no_output = 0;
+uint8_t current_output = 0;
 
 uint8_t dec_address_loopup(uint8_t trin_address);
 uint8_t trin_address_lookup(uint8_t dec_address);
@@ -124,8 +126,12 @@ void write_i2c_reg16(uint8_t add, uint8_t reg, uint16_t value) {
 
 void goto_sel(uint8_t off) {
 	uint8_t mode = state - 2;
-	uint8_t line = mode / 3;
-	mode  = mode - (line * 3);
+	uint8_t line = mode / 5;
+	mode  = mode - (line * 5);
+	if (mode > 2)
+		line = 1;
+	else
+		line = 0;
 	lcd_goto(sel[mode]+off, line);
 }
 
@@ -194,11 +200,16 @@ void save() {
 }
 
 
-void show_settings(uint8_t line, info_t i) {
+void show_settings() { //uint8_t line, info_t i) {
+	uint8_t output = state / SETADDB;
+	info_t i = info[output];
 	char buf[16];
 	char p = (i.position ? '/' : '|');
-	lcd_goto(1, line);
+	lcd_goto(1, 0);
 	sprintf(buf, "%4u %4u %4u%c", i.address, i.shorts, i.longs, p);
+	lcd_puts(buf);
+	lcd_goto(0, 1);
+	sprintf(buf, " %4u %4u      ", i.port, i.speed);
 	lcd_puts(buf);
 }
 
@@ -208,7 +219,9 @@ int main(void)
 	/* insert your hardware initialization here */
 	lcd_init();//(LCD_DISP_ON_CURSOR_BLINK);
 	//lcd_puts("Hello world\0");
-	
+	lcd_puts("PSSD Programmer");
+	lcd_goto(0, 1);
+	lcd_puts("v 0.1.0");
 	keypad_init();
 	
 	i2c_init();
@@ -223,13 +236,14 @@ int main(void)
 		switch (state) {
 			case SCAN:
 				board = 0;
+				lcd_goto(0,0);
+				lcd_puts("Scan I2C        ");
 				do {
 					board = read_i2c_reg(addPSSD, FW_VERSION_REG);
 					_delay_us(10);
 				} while (board == 0);
 /*				PORT_I2C |= (1 << P_I2C);
 				lcd_goto(0,0);
-				lcd_puts("Scan I2C");
 				//				lcd_putch(prog[ret]);
 				i2c_start_wait(addPSSD+I2C_WRITE);
 				//if (i2c_start(addPSSD+I2C_WRITE)) {
@@ -245,10 +259,12 @@ int main(void)
 					case PSSD:
 						lcd_puts("PSSD");
 						state = GETINFO;
+						no_output = 2;
 						break;
 					case CSMD:
 						state = GETINFO;
 						lcd_puts("C Rail Servo mount");
+						no_output = 2;
 						break;
 						
 					default:
@@ -263,13 +279,12 @@ int main(void)
 				info[0].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_A_REG));
 				info[0].longs = read_i2c_reg16(addPSSD, LONG_A_REG_L);
 				info[0].shorts = read_i2c_reg16(addPSSD, SHORT_A_REG_L);
-				info[0].position = read_i2c_reg(addPSSD, POSITION_A_REG);
+				info[0].position = 1;//read_i2c_reg(addPSSD, POSITION_A_REG);
 				info[1].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_B_REG));
 				info[1].longs = read_i2c_reg16(addPSSD, LONG_B_REG_L);
 				info[1].shorts = read_i2c_reg16(addPSSD, SHORT_B_REG_L);
-				info[1].position = read_i2c_reg(addPSSD, POSITION_B_REG);
-				show_settings(0, info[0]);
-				show_settings(1, info[1]);
+				info[1].position = 1;//read_i2c_reg(addPSSD, POSITION_B_REG);
+				show_settings();
 				state++;
 				val = get_val();
 				lcd_goto(0,0);
@@ -329,6 +344,7 @@ int main(void)
 								lcd_putch(' ');
 								state++;
 								if (state > SETSPEEDB) state = SETADDA;
+								show_settings();
 								val = get_val();
 								digit = 0;
 								goto_sel(0);
