@@ -56,6 +56,7 @@ uint8_t digit;
 uint16_t val;
 uint8_t sel[] = {0, 5, 10};
 
+uint8_t dec_address_loopup(uint8_t trin_address);
 uint8_t trin_address_lookup(uint8_t dec_address);
 
 uint16_t get_val() {
@@ -148,11 +149,11 @@ void proces_digit(uint8_t value) {
 void save() {
 	switch (state) {
 		case SETADDA:
-			write_i2c_reg(addPSSD, ADD_A_REG, val);
+			write_i2c_reg(addPSSD, ADD_A_REG, trin_address_lookup(val));
 			info[0].address = val;
 			break;
 		case SETADDB:
-			write_i2c_reg(addPSSD, ADD_B_REG, val);
+			write_i2c_reg(addPSSD, ADD_B_REG, trin_address_lookup(val));
 			info[1].address = val;
 			break;
 		case SETPORTA:
@@ -259,11 +260,11 @@ int main(void)
 				//state++;
 				break;
 			case GETINFO:
-				info[0].address = read_i2c_reg(addPSSD, ADD_A_REG);
+				info[0].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_A_REG));
 				info[0].longs = read_i2c_reg16(addPSSD, LONG_A_REG_L);
 				info[0].shorts = read_i2c_reg16(addPSSD, SHORT_A_REG_L);
 				info[0].position = read_i2c_reg(addPSSD, POSITION_A_REG);
-				info[1].address = read_i2c_reg(addPSSD, ADD_B_REG);
+				info[1].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_B_REG));
 				info[1].longs = read_i2c_reg16(addPSSD, LONG_B_REG_L);
 				info[1].shorts = read_i2c_reg16(addPSSD, SHORT_B_REG_L);
 				info[1].position = read_i2c_reg(addPSSD, POSITION_B_REG);
@@ -362,6 +363,14 @@ int main(void)
 		}
 	}
 	return 0;   /* never reached */
+}
+
+uint8_t dec_address_loopup(uint8_t trin_address) {
+	uint8_t ad = 0;
+	for (ad = 0; ad < 256; ad++) {
+		if (trin_address_lookup(ad) == trin_address)
+			return ad;
+	}
 }
 
 uint8_t trin_address_lookup(uint8_t dec_address) {
