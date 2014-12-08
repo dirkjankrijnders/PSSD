@@ -18,12 +18,28 @@
 		902D2F98198D74050083859F /* PSSD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSD.h; path = firmware/PSSD.h; sourceTree = SOURCE_ROOT; };
 		902D2F99198D741A0083859F /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PSSD.c; path = firmware/PSSD.c; sourceTree = SOURCE_ROOT; };
 		902D2F9B198D786D0083859F /* twimaster.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = twimaster.c; path = lib/twimaster.c; sourceTree = "<group>"; };
+		90400D1F199DD36B00DCC7F5 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = firmware/Makefile; sourceTree = SOURCE_ROOT; };
+		9070B64E1A36080E00267339 /* attiny45_accessory_014.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = attiny45_accessory_014.c; path = ../../../Documents/attiny45_accessory_014.c; sourceTree = "<group>"; };
+		9070B64F1A360A1E00267339 /* attiny44_accessory_pin_06.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = attiny44_accessory_pin_06.c; path = ../../../Documents/attiny44_accessory_pin_06.c; sourceTree = "<group>"; };
+		9070B6501A360AFE00267339 /* attiny44_accessory_pin_06.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = attiny44_accessory_pin_06.h; path = ../../../Documents/attiny44_accessory_pin_06.h; sourceTree = "<group>"; };
+		90B19ED2199E4033001E6A29 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		90B19ED3199E4033001E6A29 /* .project */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
+		90B19ED4199E4033001E6A29 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
+		90B19ED5199E4033001E6A29 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		90B19ED6199E4033001E6A29 /* mm1acc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mm1acc.c; sourceTree = "<group>"; };
+		90B19ED7199E4033001E6A29 /* mm1acc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mm1acc.h; sourceTree = "<group>"; };
+		90B19ED8199E4033001E6A29 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		4079523B0CEA382200E202DC = {
 			isa = PBXGroup;
 			children = (
+				9070B64E1A36080E00267339 /* attiny45_accessory_014.c */,
+				9070B64F1A360A1E00267339 /* attiny44_accessory_pin_06.c */,
+				9070B6501A360AFE00267339 /* attiny44_accessory_pin_06.h */,
+				90B19ED1199E4033001E6A29 /* mm1acc */,
+				902D2F9A198D74210083859F /* PSSD */,
 				4079525D0CEA38CC00E202DC /* Programmer */,
 			);
 			sourceTree = "<group>";
@@ -34,7 +50,6 @@
 				901425DA18EF357300F5F19F /* lib */,
 				4079525F0CEA38CC00E202DC /* Makefile */,
 				4079525E0CEA38CC00E202DC /* main.c */,
-				902D2F9A198D74210083859F /* PSSD */,
 			);
 			path = Programmer;
 			sourceTree = "<group>";
@@ -56,10 +71,27 @@
 		902D2F9A198D74210083859F /* PSSD */ = {
 			isa = PBXGroup;
 			children = (
+				90400D1F199DD36B00DCC7F5 /* Makefile */,
 				902D2F98198D74050083859F /* PSSD.h */,
 				902D2F99198D741A0083859F /* PSSD.c */,
 			);
 			name = PSSD;
+			path = Programmer;
+			sourceTree = "<group>";
+		};
+		90B19ED1199E4033001E6A29 /* mm1acc */ = {
+			isa = PBXGroup;
+			children = (
+				90B19ED2199E4033001E6A29 /* .gitignore */,
+				90B19ED3199E4033001E6A29 /* .project */,
+				90B19ED4199E4033001E6A29 /* keywords.txt */,
+				90B19ED5199E4033001E6A29 /* LICENSE */,
+				90B19ED6199E4033001E6A29 /* mm1acc.c */,
+				90B19ED7199E4033001E6A29 /* mm1acc.h */,
+				90B19ED8199E4033001E6A29 /* README.md */,
+			);
+			name = mm1acc;
+			path = ../mm1acc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
