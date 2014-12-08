@@ -16,10 +16,16 @@
 
 #include "../firmware/PSSD.h"
 
-#define PORT_I2C PORTB
-#define DDR_I2C DDRB
-#define PIN_I2C PINB
-#define P_I2C PB1
+#define PORT_I2CE PORTB
+#define DDR_I2CE DDRB
+#define PIN_I2CE PINB
+#define P_I2CE PB1
+
+#define PORT_I2C PORTC
+#define DDR_I2C DDRC
+#define PIN_I2C PINC
+#define P_I2C_SDA PC4
+#define P_I2C_SCL PC5
 
 enum state_t {
 	SCAN = 0,
@@ -91,14 +97,16 @@ uint16_t get_val() {
 
 uint8_t read_i2c_reg(uint8_t add, uint8_t reg) {
 	uint8_t ret;
-	PORT_I2C |= (1 << P_I2C);
+	PORT_I2CE |= (1 << P_I2CE);
 	_delay_us(10);
+	i2c_init();
 	i2c_start_wait(add+I2C_WRITE);
 	i2c_write(reg);
 	i2c_rep_start(add+I2C_READ);       // set device address and read mode
 	ret = i2c_readNak();                    // read one byte from EEPROM
 	i2c_stop();
-	PORT_I2C &= ~(1 << P_I2C);
+	i2c_deinit();
+	PORT_I2CE &= ~(1 << P_I2CE);
 	return ret;
 }
 
@@ -109,13 +117,15 @@ uint16_t read_i2c_reg16(uint8_t add, uint8_t reg) {
 }
 
 void write_i2c_reg(uint8_t add, uint8_t reg, uint8_t value) {
-	PORT_I2C |= (1 << P_I2C);
+	PORT_I2CE |= (1 << P_I2CE);
 	_delay_us(10);
+	i2c_init();
 	i2c_start_wait(add+I2C_WRITE);
 	i2c_write(reg);
 	i2c_write(value);
 	i2c_stop();
-	PORT_I2C &= ~(1 << P_I2C);
+	i2c_deinit();
+	PORT_I2CE &= ~(1 << P_I2CE);
 }
 
 void write_i2c_reg16(uint8_t add, uint8_t reg, uint16_t value) {
@@ -215,7 +225,7 @@ void show_settings() { //uint8_t line, info_t i) {
 
 int main(void)
 {
-	DDR_I2C |= (1 << P_I2C);
+	DDR_I2CE |= (1 << P_I2CE);
 	/* insert your hardware initialization here */
 	lcd_init();//(LCD_DISP_ON_CURSOR_BLINK);
 	//lcd_puts("Hello world\0");
@@ -223,8 +233,6 @@ int main(void)
 	lcd_goto(0, 1);
 	lcd_puts("v 0.1.0");
 	keypad_init();
-	
-	i2c_init();
 	
 	char key = '\0';
 //	unsigned char ret = 0;
@@ -242,7 +250,7 @@ int main(void)
 					board = read_i2c_reg(addPSSD, FW_VERSION_REG);
 					_delay_us(10);
 				} while (board == 0);
-/*				PORT_I2C |= (1 << P_I2C);
+/*				PORT_I2CE |= (1 << P_I2CE);
 				lcd_goto(0,0);
 				//				lcd_putch(prog[ret]);
 				i2c_start_wait(addPSSD+I2C_WRITE);
@@ -253,7 +261,7 @@ int main(void)
 				
 				board = i2c_readNak();                    // read one byte from EEPROM
 				i2c_stop();
-				PORT_I2C &= ~(1 << P_I2C);*/
+				PORT_I2CE &= ~(1 << P_I2CE);*/
 				lcd_goto(0,1);
 				switch (board) {
 					case PSSD:
