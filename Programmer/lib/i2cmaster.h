@@ -101,6 +101,14 @@
  */
 extern void i2c_init(void);
 
+/**
+ @brief Disabling of the I2C bus interface. Need to be called if pins need to be
+ tri-stated
+ 
+ @param  void
+ @return none
+ */
+extern void i2c_deinit(void);
 
 /** 
  @brief Terminates the data transfer and releases the I2C bus 

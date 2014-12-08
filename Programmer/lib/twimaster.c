@@ -33,6 +33,14 @@ void i2c_init(void)
 
 }/* i2c_init */
 
+/*************************************************************************
+ Disabling of the I2C bus interface. Need to be called if pins need to be 
+ tri-stated
+ *************************************************************************/
+void i2c_deinit(void)
+{
+	TWCR = 0;
+} /* i2c_deinit */
 
 /*************************************************************************	
   Issues a start condition and sends address and transfer direction.
