@@ -19,6 +19,9 @@
 		902D2F99198D741A0083859F /* PSSD.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PSSD.c; path = firmware/PSSD.c; sourceTree = SOURCE_ROOT; };
 		902D2F9B198D786D0083859F /* twimaster.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = twimaster.c; path = lib/twimaster.c; sourceTree = "<group>"; };
 		90400D1F199DD36B00DCC7F5 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = firmware/Makefile; sourceTree = SOURCE_ROOT; };
+		9070B64E1A36080E00267339 /* attiny45_accessory_014.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = attiny45_accessory_014.c; path = ../../../Documents/attiny45_accessory_014.c; sourceTree = "<group>"; };
+		9070B64F1A360A1E00267339 /* attiny44_accessory_pin_06.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = attiny44_accessory_pin_06.c; path = ../../../Documents/attiny44_accessory_pin_06.c; sourceTree = "<group>"; };
+		9070B6501A360AFE00267339 /* attiny44_accessory_pin_06.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = attiny44_accessory_pin_06.h; path = ../../../Documents/attiny44_accessory_pin_06.h; sourceTree = "<group>"; };
 		90B19ED2199E4033001E6A29 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		90B19ED3199E4033001E6A29 /* .project */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = .project; sourceTree = "<group>"; };
 		90B19ED4199E4033001E6A29 /* keywords.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = keywords.txt; sourceTree = "<group>"; };
@@ -32,6 +35,9 @@
 		4079523B0CEA382200E202DC = {
 			isa = PBXGroup;
 			children = (
+				9070B64E1A36080E00267339 /* attiny45_accessory_014.c */,
+				9070B64F1A360A1E00267339 /* attiny44_accessory_pin_06.c */,
+				9070B6501A360AFE00267339 /* attiny44_accessory_pin_06.h */,
 				90B19ED1199E4033001E6A29 /* mm1acc */,
 				902D2F9A198D74210083859F /* PSSD */,
 				4079525D0CEA38CC00E202DC /* Programmer */,
