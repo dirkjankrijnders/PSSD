@@ -56,7 +56,6 @@ typedef struct {
 #define addPSSD  0x20
 
 //char prog[] = {'-','/','|','\\'};
-uint8_t icbuf[2];
 info_t info[2];
 uint8_t digit;
 uint16_t val;
@@ -98,7 +97,7 @@ uint16_t get_val() {
 uint8_t read_i2c_reg(uint8_t add, uint8_t reg) {
 	uint8_t ret;
 	PORT_I2CE |= (1 << P_I2CE);
-	_delay_us(10);
+	_delay_us(40);
 	i2c_init();
 	i2c_start_wait(add+I2C_WRITE);
 	i2c_write(reg);
@@ -111,6 +110,7 @@ uint8_t read_i2c_reg(uint8_t add, uint8_t reg) {
 }
 
 uint16_t read_i2c_reg16(uint8_t add, uint8_t reg) {
+	uint8_t icbuf[2];
 	icbuf[0] = read_i2c_reg(add, reg);
 	icbuf[1] = read_i2c_reg(add, reg+1);
 	return *(uint16_t*)icbuf;
@@ -285,10 +285,15 @@ int main(void)
 				break;
 			case GETINFO:
 				info[0].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_A_REG));
+				info[0].speed = read_i2c_reg(addPSSD, SPEED_A_REG);
+				info[0].port = read_i2c_reg(addPSSD, PORT_A_REG);
 				info[0].longs = read_i2c_reg16(addPSSD, LONG_A_REG_L);
 				info[0].shorts = read_i2c_reg16(addPSSD, SHORT_A_REG_L);
 				info[0].position = 1;//read_i2c_reg(addPSSD, POSITION_A_REG);
+				
 				info[1].address = dec_address_loopup(read_i2c_reg(addPSSD, ADD_B_REG));
+				info[1].speed = read_i2c_reg(addPSSD, SPEED_B_REG);
+				info[1].port = read_i2c_reg(addPSSD, PORT_B_REG);
 				info[1].longs = read_i2c_reg16(addPSSD, LONG_B_REG_L);
 				info[1].shorts = read_i2c_reg16(addPSSD, SHORT_B_REG_L);
 				info[1].position = 1;//read_i2c_reg(addPSSD, POSITION_B_REG);
@@ -347,7 +352,7 @@ int main(void)
 								save();
 								digit = 0;
 								break;
-							case 13:
+							case 13: // A
 								goto_sel(0);
 								lcd_putch(' ');
 								state++;
@@ -358,9 +363,9 @@ int main(void)
 								goto_sel(0);
 								lcd_putch('>');
 								break;
-							case 14:
+							case 14: // B
 								save();
-							case 15:
+							case 15: // C
 								if (info[0].position == 0) {
 									info[0].position =1;
 								} else {
@@ -376,7 +381,7 @@ int main(void)
 								show_settings(0, info[0]);
 								show_settings(1, info[1]);
 								break;
-							case 16:
+							case 16: // D
 								state = SCAN;
 							default:
 								break;
