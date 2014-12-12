@@ -66,7 +66,9 @@ AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE)
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE) $(INCLUDE)
 
 # symbolic targets:
-all:	PSSD.hex PSSD.eeprom.hex
+all:	PSSD.hex 
+
+#PSSD.eeprom.hex
 
 .c.o:
 	$(COMPILE) -c $< -o $@ -DBOARD=$(BOARD)

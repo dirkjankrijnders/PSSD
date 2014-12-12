@@ -117,7 +117,7 @@
 		4079523D0CEA382200E202DC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 4079523E0CEA382200E202DC /* Build configuration list for PBXProject "PSSDProgrammer" */;
 			compatibilityVersion = "Xcode 3.2";
