@@ -45,4 +45,23 @@
 #define NULL_REGISTER 0xFF
 
 
+#define IO0 PA0 // J1, pin 13
+#define IO1 PA1 // J2, pin 12
+#define IO2 PA2 // J3, pin 11
+
+#define IO3 PB0 // J7, pin 2
+#define IO4 PB1 // J8, pin 3
+
+#define PORTIO012 PORTA
+#define PINIO012 PINA
+#define DDRIO012 DDRA
+
+#define PORTIO34 PORTB
+#define PINIO34 PINB
+#define DDRIO34 DDRB
+
+#define DEBOUNCE0 GPIOR0
+#define DEBOUNCE1 GPIOR1
+
+#define MANUALSTATE GPIOR2
 #endif
