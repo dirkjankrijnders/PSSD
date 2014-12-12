@@ -151,6 +151,21 @@ void setup_servo_pwm() {
 #endif
 }
 
+void io_init() {
+	// SETUP IO 0 & 1 as buttons
+	DDRIO012 &= ~((1 << IO0) | (1 << IO0)); //Inputs
+	
+	// Enable pull-ups, the switch would pull them to ground
+	PORTIO012 |= (1 << IO0) | (1 << IO0);
+	
+	// Set up the DEBOUNCE registers:
+	DEBOUNCE0 = 0;
+	DEBOUNCE1 = 0;
+	
+	// Setup IO 3 & 4 as feedback outputs
+	DDRIO34 |= ((1 << IO3) | (1 << IO4));
+}
+
 int main()  __attribute__ ((noreturn));
 
 int main() {
@@ -162,6 +177,8 @@ int main() {
 	mm1acc_init();
 	
 	setup_servo_pwm();
+	
+	io_init();
 	
 	PORT_FET &= ~(1 << P_FET);
 	DDRA |= (1 << PA2); // Pad J1 as output
@@ -191,12 +208,12 @@ int main() {
 				if (data.address == AddA) {
 					if (data.function == 1) {
 						if (data.port == PortA) {
-							PORTA |= (1 < PA2);
+							PORTA |= (1 << PA2);
 							targetA = shortA;
 							FET_state = 1;
 							eeprom_write_word(&eLastA, shortA);
 						} else if (data.port == PortA + 1) {
-							PORTA |= (1 < PA2);
+							PORTA |= (1 << PA2);
 							targetA = longA;
 							FET_state = 1;
 							eeprom_write_word(&eLastA, longA);
@@ -268,8 +285,45 @@ int main() {
 			
 			if (currentA == targetA && currentB == targetB && FET_state > 0 && FET_state < 10) FET_state = 10;
 			_delay_ms(1);
-			PORTA &= ~(1 < PA2);
+			PORTA &= ~(1 << PA2);
+
+			DEBOUNCE0 = DEBOUNCE0 << 1 | (PINIO012 & ((1 << IO0) ? 1 :0));
+			DEBOUNCE1 = DEBOUNCE1 << 1 | (PINIO012 & ((1 << IO1) ? 1 :0));
 			
+			if (DEBOUNCE0 == 255 && ~(MANUALSTATE & 1)) {
+				// Button 0 pressed!
+				MANUALSTATE &= 1;
+				if (targetA == shortA){
+					PORTA |= (1 << PA2);
+					targetA = longA;
+					FET_state = 1;
+					eeprom_write_word(&eLastA, longA);
+				} else {
+					PORTA |= (1 << PA2);
+					targetA = shortA;
+					FET_state = 1;
+					eeprom_write_word(&eLastA, shortA);
+				}
+			}
+			if (DEBOUNCE0 == 0)
+				MANUALSTATE &= 0b11111110;
+			
+			if (DEBOUNCE1 == 255 && ~(MANUALSTATE & 2)) {
+				// Button 1 pressed!
+				MANUALSTATE &= 2;
+			}
+			if (DEBOUNCE1 == 0)
+				MANUALSTATE &= 0b11111101;
+			
+			if (currentA == shortA)
+				PORTIO34 |= (1 << IO3);
+			if (currentA == longA)
+				PORTIO34 &= ~(1 << IO3);
+
+			if (currentB  == shortB)
+				PORTIO34 |= (1 << IO4);
+			if (currentB == longB)
+				PORTIO34 &= ~(1 << IO4);
 		} // While
 	}
 }
